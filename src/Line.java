@@ -14,7 +14,7 @@ public class Line {
         this.end = end;
     }
     /**
-     * Constructs a new Line object with the start and end points.
+     * Constructs a new Line object with the specified start and end points.
      @param x1 A double representing the x-coordinate of the start point of the line segment
      @param y1 A double representing the y-coordinate of the start point of the line segment
      @param x2 A double representing the x-coordinate of the end point of the line segment
