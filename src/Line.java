@@ -62,15 +62,15 @@ public class Line {
     }
     /**
      * Checks if this line segment is parallel to another line segment.
-     * @param other The line segment to compare for parallelism
-     * @return true if this line segment is parallel to the other Line, false otherwise
+     * @param other A Line object representing the other line to compare for parallelism
+     * @return true if this line segment is parallel to the other line segment, false otherwise
      */
     public boolean isParallel(Line other) {
         return Double.compare(this.slope(), other.slope()) == 0;
     }
     /**
      * Checks whether this line segment intersects a vertical line at the given x-coordinate.
-     * @param x1 The x-coordinate of the vertical line to check for intersection
+     * @param x1 A double representing the x-coordinate of the vertical line to check for intersection
      * @return true if this line segment intersects the vertical line at the given x-coordinate, false otherwise
      */
     public boolean intersectsVerticalLine(double x1) {

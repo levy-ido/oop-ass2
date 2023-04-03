@@ -14,7 +14,7 @@ public class Point {
         this.y = y;
     }
     /**
-     * Calculates the Euclidean distance between this point and a given other point.
+     * Calculates the distance between this point and a given other point.
      * @param other A Point object representing the point to calculate the distance to
      * @return A double representing the distance from this point to the other point
      */
@@ -31,13 +31,13 @@ public class Point {
         return Double.compare(this.x, other.x) == 0 && Double.compare(this.y, other.y) == 0;
     }
     /**
-     * @return A double representing the x-coordinate of this Point object
+     * @return A double representing the x-coordinate of this point
      */
     public double getX() {
         return this.x;
     }
     /**
-     * @return A double representing the y-coordinate of this Point object
+     * @return A double representing the y-coordinate of this point
      */
     public double getY() {
         return this.y;
