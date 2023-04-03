@@ -1,117 +1,126 @@
 /**
- *
+ * Represents a line segment between two points.
  */
 public class Line {
     private final Point start;
     private final Point end;
     /**
-     * Constructor 1. Accepts two Point instances as input
-     * @param start A point representing one end of the new line segment
-     * @param end A point representing the other end of the new line segment
+     * Constructs a new Line object with a given start and end points.
+     * @param start A Point object representing one end of the new line segment
+     * @param end A Point object representing the other end of the new line segment
      */
     public Line(Point start, Point end) {
         this.start = start;
         this.end = end;
     }
-
     /**
-     * Constructor 2. Accepts two sets of coordinates, one for each end of the line segment
-     * @param x1 Distance from the origin to one end of the line segment on the x-axis
-     * @param y1 Distance from the origin to one end of the line segment on the y-axis
-     * @param x2 Distance from the origin to the other end of the line segment on the x-axis
-     * @param y2 Distance from the origin to the other end of the line segment on the y-axis
+     * Constructs a new Line object with the specified start and end points.
+     @param x1 A double representing the x-coordinate of the start point of the line segment
+     @param y1 A double representing the y-coordinate of the start point of the line segment
+     @param x2 A double representing the x-coordinate of the end point of the line segment
+     @param y2 A double representing the y-coordinate of the end point of the line segment
      */
     public Line(double x1, double y1, double x2, double y2) {
         this(new Point(x1, y1), new Point(x2, y2));
     }
-
     /**
-     *
-     * @return The length of this line segment
+     * Calculates the length of this line segment.
+     * @return A double representing the length of this line segment
      */
     public double length() {
         return this.start.distance(this.end);
     }
-
     /**
-     *
-     * @return The point in the middle of this line segment
+     * @return A Point object representing the point in the middle of this line segment
      */
     public Point middle() {
         return new Point((this.start.getX() + this.end.getX()) / 2, (this.start.getY() + this.end.getY()) / 2);
     }
-
     /**
-     *
-     * @return The "starting point" of this line segment
+     * @return A Point object representing the starting point of this line segment
      */
     public Point start() {
         return this.start;
     }
-
     /**
-     *
-     * @return The "ending point" of this line segment
+     * @return A Point object representing the ending point of this line segment
      */
     public Point end() {
         return this.end;
     }
-
     /**
-     *
-     * @return The slope this line
+     * @return A double representing the slope of this line segment
      */
     public double slope() {
         return (this.end.getY() - this.start.getY()) / (this.end.getX() - this.start.getX());
     }
-
     /**
-     *
-     * @return The intercept of this line
+     * @return A double representing the intercept of this line segment
      */
     public double intercept() {
         return this.start.getY() - this.slope() * this.start.getX();
     }
     /**
-     *
-     * @param other Other line segment
-     * @return true if this line segment and a given other line segment intersect, else false
+     * Checks if this line segment is parallel to another line segment.
+     * @param other A Line object representing the other line to compare for parallelism
+     * @return true if this line segment is parallel to the other line segment, false otherwise
+     */
+    public boolean isParallel(Line other) {
+        return Double.compare(this.slope(), other.slope()) == 0;
+    }
+    /**
+     * Checks whether this line segment intersects a vertical line at the given x-coordinate.
+     * @param x1 A double representing the x-coordinate of the vertical line to check for intersection
+     * @return true if this line segment intersects the vertical line at the given x-coordinate, false otherwise
+     */
+    public boolean intersectsVerticalLine(double x1) {
+        return Double.compare(x1, this.start.getX()) >= 0 && Double.compare(x1, this.end.getX()) <= 0;
+    }
+    /**
+     * Checks whether this line segment is intersecting with another line segment.
+     * @param other A Line object representing the other line segment to check for intersection with
+     * @return true if this line segment intersects with the other line segment, false otherwise
      */
     public boolean isIntersecting(Line other) {
-        if (this.start.getX() > other.end().getX() || this.end.getX() < other.start().getX()) {
+        if (this.isParallel(other)) {
+            if (Double.compare(this.intercept(), other.intercept()) == 0) {
+                return Double.compare(this.start.getX(), other.end.getX()) <= 0
+                        && Double.compare(this.end.getX(), other.start.getX()) >= 0;
+            }
             return false;
         }
-        if (this.start.getY() > other.end().getY())
+        double intersectionX = (other.intercept() - this.intercept()) / (this.slope() - other.slope());
+        return this.intersectsVerticalLine(intersectionX) && other.intersectsVerticalLine(intersectionX);
     }
-
     /**
-     *
-     * @param other Other line segment
-     * @return If this line intersects with a given other line returns the intersection point, else returns null
+     * Returns the point of intersection between this line segment and another line segment.
+     * @param other A Line object representing the other line segment to check intersection with
+     * @return A Point object representing the single point of intersection if it exists, otherwise returns null
      */
     public Point intersectionWith(Line other) {
-        if (Double.compare(this.slope(), other.slope()) == 0) {
-            // Parallel line segments
-            // Der anfang ist das ende
-            if (this.start.equals(other.end())) {
+        if (!this.isIntersecting(other)) {
+            return null;
+        }
+        if (this.isParallel(other)) {
+            if (this.start.equals(other.end)) {
                 return this.start;
             }
-            if (other.start().equals(this.end)) {
+            if (this.end.equals(other.start)) {
                 return this.end;
             }
             return null;
         }
         double intersectionX = (other.intercept() - this.intercept()) / (this.slope() - other.slope());
-        if (intersectionX < this.start.getX() || intersectionX > this.end.getX()) {
-            return null;
-        }
-        if (intersectionX < other.start().getX() || intersectionX > other.end().getX()) {
-            return null;
-        }
-        return new Point(intersectionX, this.slope() * intersectionX + this.intercept());
+        double intersectionY = this.slope() * intersectionX + this.intercept();
+        return new Point(intersectionX, intersectionY);
     }
-
-    // equals -- return true is the lines are equal, false otherwise
-    public boolean equals(Line other) { }
-
+    /**
+     * Returns whether this line segment is equal to the given line segment.
+     * @param other A Line object representing the other line segment to compare to
+     * @return true if the line segments are equal, false otherwise
+     */
+    public boolean equals(Line other) {
+        // Two line segments are equal if they have the same slope-intercept form
+        return this.isParallel(other) && Double.compare(this.intercept(), other.intercept()) == 0;
+    }
 }
