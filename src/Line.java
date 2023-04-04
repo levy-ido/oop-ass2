@@ -6,12 +6,18 @@ public class Line {
     private final Point end;
     /**
      * Constructs a new Line object with a given start and end points.
+     * Makes sure that the starting point is to the left of the ending point.
      * @param start A Point object representing one end of the new line segment
      * @param end A Point object representing the other end of the new line segment
      */
     public Line(Point start, Point end) {
-        this.start = start;
-        this.end = end;
+        if (Double.compare(start.getX(), end.getX()) <= 0) {
+            this.start = start;
+            this.end = end;
+        } else {
+            this.start = end;
+            this.end = start;
+        }
     }
     /**
      * Constructs a new Line object with the specified start and end points.
@@ -120,7 +126,6 @@ public class Line {
      * @return true if the line segments are equal, false otherwise
      */
     public boolean equals(Line other) {
-        // Two line segments are equal if they have the same slope-intercept form
-        return this.isParallel(other) && Double.compare(this.intercept(), other.intercept()) == 0;
+        return this.start.equals(other.start) && this.end.equals(other.end);
     }
 }
