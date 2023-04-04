@@ -5,8 +5,9 @@ import biuoop.DrawSurface;
  */
 public class Ball {
     private Point center;
-    private int radius;
-    private java.awt.Color brush;
+    private final int radius;
+    private final java.awt.Color brush;
+    private Velocity v;
     /**
      * Constructs a new Ball object with the given center, radius and color.
      * @param center A point object representing the center of the ball
@@ -59,5 +60,45 @@ public class Ball {
     public void drawOn(DrawSurface surface) {
         surface.setColor(this.getColor());
         surface.fillCircle(this.getX(), this.getY(), this.getSize());
+    }
+    /**
+     * Sets this ball's velocity to a given Velocity object.
+     * @param v A Velocity object to set this ball's velocity to
+     */
+    public void setVelocity(Velocity v) {
+        this.v = v;
+    }
+    /**
+     * Sets this ball's velocity to a new Velocity object with the given dx and dy values.
+     * @param dx A double representing the x coordinate rate of change
+     * @param dy A double representing the y coordinate rate of change
+     */
+    public void setVelocity(double dx, double dy) {
+        setVelocity(new Velocity(dx, dy));
+    }
+    /**
+     * @return This ball's velocity
+     */
+    public Velocity getVelocity() {
+        return this.v;
+    }
+    /**
+     * Applies this ball's velocity to it's center.
+     * @param width An integer representing the canvas width
+     * @param height An integer representing the canvas height
+     */
+    public void moveOneStep(int width, int height) {
+        int x = this.getX();
+        int y = this.getY();
+        double dx = this.v.dx();
+        double dy = this.v.dy();
+        if (x + this.radius + dx > width || x - this.radius + dx < 0) {
+            dx = -dx;
+        }
+        if (y + this.radius + dy > height || y - this.radius + dy < 0) {
+            dy = -dy;
+        }
+        this.setVelocity(dx, dy);
+        this.center = this.v.applyToPoint(this.center);
     }
 }

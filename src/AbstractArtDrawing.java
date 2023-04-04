@@ -8,51 +8,51 @@ import java.awt.Color;
  * An abstract art generator.
  */
 public class AbstractArtDrawing {
-    private static int width = 400; // Canvas width
-    private static int height = 300; // Canvas height
-    private static int dotRadius = 3; // Radius of the blue and red dots in the drawing
-    private static int numOfLines = 10; // Number of lines to draw
+    private static final int WIDTH = 400; // Canvas WIDTH
+    private static final int HEIGHT = 300; // Canvas HEIGHT
+    private static final int DOT_RADIUS = 3; // Radius of the blue and red dots in the drawing
+    private static final int NUM_OF_LINES = 10; // Number of lines to draw
     /**
      * @param r A Random object used in generating random double values
      * @return A Line object representing the new random line segment
      */
     public Line generateRandomLine(Random r) {
-        double x1 = r.nextDouble(AbstractArtDrawing.width);
-        double y1 = r.nextDouble(AbstractArtDrawing.height);
-        double x2 = r.nextDouble(AbstractArtDrawing.width);
-        double y2 = r.nextDouble(AbstractArtDrawing.height);
+        double x1 = r.nextDouble(AbstractArtDrawing.WIDTH);
+        double y1 = r.nextDouble(AbstractArtDrawing.HEIGHT);
+        double x2 = r.nextDouble(AbstractArtDrawing.WIDTH);
+        double y2 = r.nextDouble(AbstractArtDrawing.HEIGHT);
         return new Line(x1, y1, x2, y2);
     }
     /**
      * Draws a given line segment on the canvas.
-     * @param ds A DrawSurface object used for drawing on the GUI object
+     * @param d A DrawSurface object used for drawing on the GUI object
      * @param l  A Line object representing the line segment to be drawn
      */
-    public void drawLine(DrawSurface ds, Line l) {
+    public void drawLine(DrawSurface d, Line l) {
         Point start = l.start();
         Point end = l.end();
-        ds.drawLine((int) start.getX(), (int) start.getY(), (int) end.getX(), (int) end.getY());
+        d.drawLine((int) start.getX(), (int) start.getY(), (int) end.getX(), (int) end.getY());
     }
     /**
      * Marks the middle of a given line segment with a blue dot.
-     * @param ds A DrawSurface object used for drawing on the GUI object
+     * @param d A DrawSurface object used for drawing on the GUI object
      * @param l  A Line object representing the line segment to be marked
      */
-    public void markMiddle(DrawSurface ds, Line l) {
+    public void markMiddle(DrawSurface d, Line l) {
         Point middle = l.middle();
-        ds.setColor(Color.BLUE);
-        ds.fillCircle((int) middle.getX(), (int) middle.getY(), AbstractArtDrawing.dotRadius);
-        ds.setColor(Color.BLACK);
+        d.setColor(Color.BLUE);
+        d.fillCircle((int) middle.getX(), (int) middle.getY(), AbstractArtDrawing.DOT_RADIUS);
+        d.setColor(Color.BLACK);
     }
     /**
      * Marks a given intersection point with a red dot.
-     * @param ds A DrawSurface object used for drawing on the GUI object
+     * @param d A DrawSurface object used for drawing on the GUI object
      * @param intersectionPoint A Point object representing the intersection point between two line segments
      */
-    public void markIntersectionPoint(DrawSurface ds, Point intersectionPoint) {
-        ds.setColor(Color.RED);
-        ds.fillCircle((int) intersectionPoint.getX(), (int) intersectionPoint.getY(), AbstractArtDrawing.dotRadius);
-        ds.setColor(Color.BLACK);
+    public void markIntersectionPoint(DrawSurface d, Point intersectionPoint) {
+        d.setColor(Color.RED);
+        d.fillCircle((int) intersectionPoint.getX(), (int) intersectionPoint.getY(), AbstractArtDrawing.DOT_RADIUS);
+        d.setColor(Color.BLACK);
     }
     /**
      * Draws ten random line segments on a blank canvas. Marks their middle points with blue dots. Marks intersection
@@ -60,23 +60,23 @@ public class AbstractArtDrawing {
      */
     public void draw() {
         Random r = new Random();
-        GUI gui = new GUI("Abstract Art Drawing", AbstractArtDrawing.width, AbstractArtDrawing.height);
-        DrawSurface ds = gui.getDrawSurface();
-        Line[] lines = new Line[AbstractArtDrawing.numOfLines];
-        for (int i = 0; i < AbstractArtDrawing.numOfLines; ++i) {
+        GUI gui = new GUI("Abstract Art Drawing", AbstractArtDrawing.WIDTH, AbstractArtDrawing.HEIGHT);
+        DrawSurface d = gui.getDrawSurface();
+        Line[] lines = new Line[AbstractArtDrawing.NUM_OF_LINES];
+        for (int i = 0; i < AbstractArtDrawing.NUM_OF_LINES; ++i) {
             lines[i] = generateRandomLine(r);
-            drawLine(ds, lines[i]);
-            markMiddle(ds, lines[i]);
+            drawLine(d, lines[i]);
+            markMiddle(d, lines[i]);
         }
-        for (int i = 0; i < AbstractArtDrawing.numOfLines - 1; ++i) {
-            for (int j = i + 1; j < AbstractArtDrawing.numOfLines; ++j) {
+        for (int i = 0; i < AbstractArtDrawing.NUM_OF_LINES - 1; ++i) {
+            for (int j = i + 1; j < AbstractArtDrawing.NUM_OF_LINES; ++j) {
                 Point intersectionPoint = lines[i].intersectionWith(lines[j]);
                 if (intersectionPoint != null) {
-                    markIntersectionPoint(ds, intersectionPoint);
+                    markIntersectionPoint(d, intersectionPoint);
                 }
             }
         }
-        gui.show(ds);
+        gui.show(d);
     }
     /**
      * @param args A string array. ignored
