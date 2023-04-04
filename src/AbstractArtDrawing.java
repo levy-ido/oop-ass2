@@ -12,7 +12,6 @@ public class AbstractArtDrawing {
     private static int height = 300; // Canvas height
     private static int dotRadius = 3; // Radius of the blue and red dots in the drawing
     private static int numOfLines = 10; // Number of lines to draw
-
     /**
      * @param r A Random object used in generating random double values
      * @return A Line object representing the new random line segment
@@ -24,10 +23,8 @@ public class AbstractArtDrawing {
         double y2 = r.nextDouble(AbstractArtDrawing.height);
         return new Line(x1, y1, x2, y2);
     }
-
     /**
      * Draws a given line segment on the canvas.
-     *
      * @param ds A DrawSurface object used for drawing on the GUI object
      * @param l  A Line object representing the line segment to be drawn
      */
@@ -36,10 +33,8 @@ public class AbstractArtDrawing {
         Point end = l.end();
         ds.drawLine((int) start.getX(), (int) start.getY(), (int) end.getX(), (int) end.getY());
     }
-
     /**
      * Marks the middle of a given line segment with a blue dot.
-     *
      * @param ds A DrawSurface object used for drawing on the GUI object
      * @param l  A Line object representing the line segment to be marked
      */
@@ -49,11 +44,9 @@ public class AbstractArtDrawing {
         ds.fillCircle((int) middle.getX(), (int) middle.getY(), AbstractArtDrawing.dotRadius);
         ds.setColor(Color.BLACK);
     }
-
     /**
      * Marks a given intersection point with a red dot.
-     *
-     * @param ds                A DrawSurface object used for drawing on the GUI object
+     * @param ds A DrawSurface object used for drawing on the GUI object
      * @param intersectionPoint A Point object representing the intersection point between two line segments
      */
     public void markIntersectionPoint(DrawSurface ds, Point intersectionPoint) {
@@ -61,7 +54,6 @@ public class AbstractArtDrawing {
         ds.fillCircle((int) intersectionPoint.getX(), (int) intersectionPoint.getY(), AbstractArtDrawing.dotRadius);
         ds.setColor(Color.BLACK);
     }
-
     /**
      * Draws ten random line segments on a blank canvas. Marks their middle points with blue dots. Marks intersection
      * points between line segments with red dots.
@@ -86,7 +78,6 @@ public class AbstractArtDrawing {
         }
         gui.show(ds);
     }
-
     /**
      * @param args A string array. ignored
      */
