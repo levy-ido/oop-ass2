@@ -1,5 +1,3 @@
-// Velocity specifies the change in position on the `x` and the `y` axes.
-
 /**
  * Representing a ball Object's velocity.
  */

@@ -1,3 +1,4 @@
+import java.util.Random;
 /**
  * Represents a point in a two-dimensional coordinate system.
  */
@@ -41,5 +42,16 @@ public class Point {
      */
     public double getY() {
         return this.y;
+    }
+    /**
+     * Creates a new Point object with random x and y coordinates. It's x coordinate is in [0, width), and it's y
+     * coordinate is in [0, height).
+     * @param width An integer. The new Point object's x coordinate is in [0, width)
+     * @param height An integer. The new Point object's y coordinate is in [0, height)
+     * @param random A Random object used to generate random double values
+     * @return A new Point object with random x and y coordinates
+     */
+    public static Point generateRandomPoint(int width, int height, Random random) {
+        return new Point(random.nextDouble(width), random.nextDouble(height));
     }
 }

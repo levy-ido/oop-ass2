@@ -1,7 +1,6 @@
 import biuoop.DrawSurface;
 import biuoop.GUI;
 import biuoop.Sleeper;
-
 /**
  * Draws a bouncing ball animation according to specification.
  */
@@ -15,11 +14,11 @@ public class BouncingBallAnimation {
         Ball ball = new Ball(start, BALL_RADIUS, java.awt.Color.BLACK);
         ball.setVelocity(dx, dy);
         while (true) {
-            ball.moveOneStep(BouncingBallAnimation.WIDTH, BouncingBallAnimation.HEIGHT);
-            DrawSurface d = gui.getDrawSurface();
-            ball.drawOn(d);
-            gui.show(d);
-            sleeper.sleepFor(50);  // wait for 50 milliseconds.
+            ball.moveOneStep(WIDTH, HEIGHT);
+            DrawSurface drawSurface = gui.getDrawSurface();
+            ball.drawOn(drawSurface);
+            gui.show(drawSurface);
+            sleeper.sleepFor(50);
         }
     }
     /**

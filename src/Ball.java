@@ -1,5 +1,4 @@
 import biuoop.DrawSurface;
-
 /**
  * Represents a ball.
  */
@@ -7,27 +6,27 @@ public class Ball {
     private Point center;
     private final int radius;
     private final java.awt.Color brush;
-    private Velocity v;
+    private Velocity velocity;
     /**
      * Constructs a new Ball object with the given center, radius and color.
      * @param center A point object representing the center of the ball
-     * @param r An integer representing the radius of the ball
+     * @param radius An integer representing the radius of the ball
      * @param color A Color object representing the color of the ball
      */
-    public Ball(Point center, int r, java.awt.Color color) {
+    public Ball(Point center, int radius, java.awt.Color color) {
         this.center = center;
-        this.radius = r;
+        this.radius = radius;
         this.brush = color;
     }
     /**
      * Constructs a new Ball object with the given center coordinates, radius and color.
      * @param x A double representing the x coordinate of the ball's center
      * @param y A double representing the y coordinate of the ball's center
-     * @param r An integer representing the radius of the ball
+     * @param radius An integer representing the radius of the ball
      * @param color A Color object representing the color of the ball
      */
-    public Ball(double x, double y, int r, java.awt.Color color) {
-        this(new Point(x, y), r, color);
+    public Ball(double x, double y, int radius, java.awt.Color color) {
+        this(new Point(x, y), radius, color);
     }
     /**
      * @return An integer representing the x coordinate of the ball's center
@@ -63,10 +62,10 @@ public class Ball {
     }
     /**
      * Sets this ball's velocity to a given Velocity object.
-     * @param v A Velocity object to set this ball's velocity to
+     * @param velocity A Velocity object to set this ball's velocity to
      */
-    public void setVelocity(Velocity v) {
-        this.v = v;
+    public void setVelocity(Velocity velocity) {
+        this.velocity = velocity;
     }
     /**
      * Sets this ball's velocity to a new Velocity object with the given dx and dy values.
@@ -80,7 +79,7 @@ public class Ball {
      * @return This ball's velocity
      */
     public Velocity getVelocity() {
-        return this.v;
+        return this.velocity;
     }
     /**
      * Applies this ball's velocity to it's center.
@@ -90,8 +89,8 @@ public class Ball {
     public void moveOneStep(int width, int height) {
         int x = this.getX();
         int y = this.getY();
-        double dx = this.v.dx();
-        double dy = this.v.dy();
+        double dx = this.velocity.dx();
+        double dy = this.velocity.dy();
         if (x + this.radius + dx > width || x - this.radius + dx < 0) {
             dx = -dx;
         }
@@ -99,6 +98,6 @@ public class Ball {
             dy = -dy;
         }
         this.setVelocity(dx, dy);
-        this.center = this.v.applyToPoint(this.center);
+        this.center = this.velocity.applyToPoint(this.center);
     }
 }

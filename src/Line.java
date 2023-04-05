@@ -1,3 +1,4 @@
+import java.util.Random;
 /**
  * Represents a line segment between two points.
  */
@@ -130,5 +131,17 @@ public class Line {
      */
     public boolean equals(Line other) {
         return this.start.equals(other.start) && this.end.equals(other.end);
+    }
+    /**
+     * Creates a new Line object with random ends.
+     * @param width An integer. The new Line object's ends x coordinate will be in [0, width)
+     * @param height An integer. The new Line object's ends y coordinate will be in [0, height)
+     * @param random A Random object used in generating random double values
+     * @return A new Line object representing a random line segment
+     */
+    public static Line generateRandomLine(int width, int height, Random random) {
+        Point start = Point.generateRandomPoint(width, height, random);
+        Point end = Point.generateRandomPoint(width, height, random);
+        return new Line(start, end);
     }
 }
