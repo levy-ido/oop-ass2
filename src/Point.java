@@ -20,7 +20,9 @@ public class Point {
      * @return A double representing the distance from this point to the other point
      */
     public double distance(Point other) {
-        return Math.sqrt(Math.pow(this.x - other.x, 2.0) + Math.pow(this.y - other.y, 2.0));
+        double dx = other.x - this.x;
+        double dy = other.y - this.y;
+        return Math.sqrt(dx * dx + dy * dy);
     }
     /**
      * Compares this point with a given other point for equality. Two points are considered equal if their x and y

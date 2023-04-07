@@ -4,6 +4,7 @@ import biuoop.DrawSurface;
  * Represents a frame.
  */
 public class Frame {
+    public static final Point GUI_UPPER_LEFT = new Point(0.0, 0.0);
     private final Point upperLeftCorner;
     private final int width;
     private final int height;
@@ -46,11 +47,5 @@ public class Frame {
      */
     public Point getUpperLeftCorner() {
         return this.upperLeftCorner;
-    }
-    /**
-     * @return A Color object representing this frames' color
-     */
-    public Color getColor() {
-        return this.color;
     }
 }
