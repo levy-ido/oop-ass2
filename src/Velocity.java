@@ -35,13 +35,13 @@ public class Velocity {
     /**
      * @return A double representing this velocitys' x coordinate rate of change
      */
-    public double dx() {
+    public double getDx() {
         return dx;
     }
     /**
      * @return A double representing this velocitys' y coordinate rate of change
      */
-    public double dy() {
+    public double getDy() {
         return dy;
     }
 }

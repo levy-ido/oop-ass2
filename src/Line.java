@@ -8,16 +8,14 @@ import java.util.Random;
 public class Line {
     private final Point start;
     private final Point end;
-    private final Color color;
     /**
      * Constructs a new Line object with a given start and end points.
      * Makes sure that the starting point is to the left of the ending point.
      * If the start and end points have the same x-coordinate the starting point will be below the ending point.
      * @param start A Point object representing the start of the new line segment
      * @param end A Point object representing the end of the new line segment
-     * @param color A Color object representing the new line segments' color
      */
-    public Line(Point start, Point end, Color color) {
+    public Line(Point start, Point end) {
         int xCmpRes = Double.compare(start.getX(), end.getX());
         int yCmpRes = Double.compare(start.getY(), end.getY());
         if (xCmpRes < 0 || xCmpRes == 0 && yCmpRes <= 0) {
@@ -28,7 +26,6 @@ public class Line {
             this.start = end;
             this.end = start;
         }
-        this.color = color;
     }
     /**
      * Constructs a new Line object with the specified start and end points.
@@ -36,10 +33,9 @@ public class Line {
      * @param y1 A double representing the y-coordinate of the start point of the new line segment
      * @param x2 A double representing the x-coordinate of the end point of the new line segment
      * @param y2 A double representing the y-coordinate of the end point of the new line segment
-     * @param color A Color object representing the new line segments' color
      */
-    public Line(double x1, double y1, double x2, double y2, Color color) {
-        this(new Point(x1, y1), new Point(x2, y2), color);
+    public Line(double x1, double y1, double x2, double y2) {
+        this(new Point(x1, y1), new Point(x2, y2));
     }
     /**
      * Calculates the length of this line segment.
@@ -155,8 +151,9 @@ public class Line {
      * @param drawSurface A DrawSurface object used for drawing
      */
     public void drawOn(DrawSurface drawSurface) {
-        drawSurface.setColor(this.color);
-        drawSurface.drawLine((int) this.start.getX(),
+        drawSurface.setColor(Color.BLACK);
+        drawSurface.drawLine(
+                (int) this.start.getX(),
                 (int) this.start.getY(),
                 (int) this.end.getX(),
                 (int) this.end.getY());
@@ -165,12 +162,11 @@ public class Line {
      * Creates a new Line object with random ends.
      * @param frame A Frame object. The new line segment will be created in this frame
      * @param random A Random object used in generating random double values
-     * @param color A Color object representing the new line segments' color
      * @return A new Line object representing a random line segment
      */
-    public static Line generateRandomLine(Frame frame, Random random, Color color) {
+    public static Line generateRandomLine(Frame frame, Random random) {
         Point start = Point.generateRandomPoint(frame, random);
         Point end = Point.generateRandomPoint(frame, random);
-        return new Line(start, end, color);
+        return new Line(start, end);
     }
 }
