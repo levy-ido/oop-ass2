@@ -20,7 +20,7 @@ public class Point {
      * @return A double representing the distance from this point to the other point
      */
     public double distance(Point other) {
-        return Math.sqrt((this.x - other.x) * (this.x - other.x) + (this.y - other.y) * (this.y - other.y));
+        return Math.sqrt(Math.pow(this.x - other.x, 2.0) + Math.pow(this.y - other.y, 2.0));
     }
     /**
      * Compares this point with a given other point for equality. Two points are considered equal if their x and y
@@ -44,14 +44,15 @@ public class Point {
         return this.y;
     }
     /**
-     * Creates a new Point object with random x and y coordinates. It's x coordinate is in [0, width), and it's y
-     * coordinate is in [0, height).
-     * @param width An integer. The new Point object's x coordinate is in [0, width)
-     * @param height An integer. The new Point object's y coordinate is in [0, height)
+     * Creates a new Point object with random x and y coordinates.
+     * @param frame A Frame object. The new point will be created in this frame
      * @param random A Random object used to generate random double values
      * @return A new Point object with random x and y coordinates
      */
-    public static Point generateRandomPoint(int width, int height, Random random) {
-        return new Point(random.nextDouble(width), random.nextDouble(height));
+    public static Point generateRandomPoint(Frame frame, Random random) {
+        Point upperLeftCorner = frame.getUpperLeftCorner();
+        double x = random.nextDouble(upperLeftCorner.x, upperLeftCorner.x + frame.getWidth());
+        double y = random.nextDouble(upperLeftCorner.y, upperLeftCorner.y + frame.getHeight());
+        return new Point(x, y);
     }
 }

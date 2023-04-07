@@ -1,11 +1,14 @@
 import biuoop.DrawSurface;
+import java.awt.Color;
+import java.util.Random;
+
 /**
  * Represents a ball.
  */
 public class Ball {
     private Point center;
     private final int radius;
-    private final java.awt.Color brush;
+    private final Color color;
     private Velocity velocity;
     /**
      * Constructs a new Ball object with the given center, radius and color.
@@ -13,29 +16,29 @@ public class Ball {
      * @param radius An integer representing the radius of the ball
      * @param color A Color object representing the color of the ball
      */
-    public Ball(Point center, int radius, java.awt.Color color) {
+    public Ball(Point center, int radius, Color color) {
         this.center = center;
         this.radius = radius;
-        this.brush = color;
+        this.color = color;
     }
     /**
      * Constructs a new Ball object with the given center coordinates, radius and color.
-     * @param x A double representing the x coordinate of the ball's center
-     * @param y A double representing the y coordinate of the ball's center
+     * @param x A double representing the x-coordinate of the balls' center
+     * @param y A double representing the y-coordinate of the balls' center
      * @param radius An integer representing the radius of the ball
      * @param color A Color object representing the color of the ball
      */
-    public Ball(double x, double y, int radius, java.awt.Color color) {
+    public Ball(double x, double y, int radius, Color color) {
         this(new Point(x, y), radius, color);
     }
     /**
-     * @return An integer representing the x coordinate of the ball's center
+     * @return An integer representing the x-coordinate of the balls' center
      */
     public int getX() {
         return (int) this.center.getX();
     }
     /**
-     * @return An integer representing the y coordinate of the ball's center
+     * @return An integer representing the y-coordinate of the balls' center
      */
     public int getY() {
         return (int) this.center.getY();
@@ -49,55 +52,80 @@ public class Ball {
     /**
      * @return A Color object representing the color of the ball
      */
-    public java.awt.Color getColor() {
-        return this.brush;
+    public Color getColor() {
+        return this.color;
     }
     /**
      * Draws this Ball object on the given DrawSurface object.
-     * @param surface A DrawSurface object to draw the ball on
+     * @param surface A DrawSurface object used for drawing
      */
     public void drawOn(DrawSurface surface) {
-        surface.setColor(this.getColor());
-        surface.fillCircle(this.getX(), this.getY(), this.getSize());
+        surface.setColor(this.color);
+        surface.fillCircle(this.getX(), this.getY(), this.radius);
     }
     /**
-     * Sets this ball's velocity to a given Velocity object.
-     * @param velocity A Velocity object to set this ball's velocity to
+     * Sets this balls' velocity to a given velocity.
+     * @param velocity A Velocity object to set this balls' velocity to
      */
     public void setVelocity(Velocity velocity) {
         this.velocity = velocity;
     }
     /**
-     * Sets this ball's velocity to a new Velocity object with the given dx and dy values.
-     * @param dx A double representing the x coordinate rate of change
-     * @param dy A double representing the y coordinate rate of change
+     * Sets this balls' velocity to a given velocity.
+     * @param dx A double representing the x-coordinate rate of change
+     * @param dy A double representing the y-coordinate rate of change
      */
     public void setVelocity(double dx, double dy) {
         setVelocity(new Velocity(dx, dy));
     }
     /**
-     * @return This ball's velocity
+     * @return A Velocity object representing this balls' velocity
      */
     public Velocity getVelocity() {
         return this.velocity;
     }
     /**
-     * Applies this ball's velocity to it's center.
-     * @param width An integer representing the canvas width
-     * @param height An integer representing the canvas height
+     * Moves the ball one step according to its velocity. If the ball is about to leave the frame it's in it changes
+     * direction before moving.
+     * @param frame A Frame object representing the frame the ball is in
      */
-    public void moveOneStep(int width, int height) {
+    public void moveOneStep(Frame frame) {
         int x = this.getX();
         int y = this.getY();
         double dx = this.velocity.dx();
         double dy = this.velocity.dy();
-        if (x + this.radius + dx > width || x - this.radius + dx < 0) {
+        Point frameUpperLeftCorner = frame.getUpperLeftCorner();
+        double frameUpperLeftCornerX = frameUpperLeftCorner.getX();
+        double frameUpperLeftCornerY = frameUpperLeftCorner.getY();
+        boolean isExitingRight = x + this.radius + dx > frameUpperLeftCornerX + frame.getWidth();
+        boolean isExitingLeft = x - this.radius + dx < frameUpperLeftCornerX;
+        if (isExitingRight || isExitingLeft) {
             dx = -dx;
         }
-        if (y + this.radius + dy > height || y - this.radius + dy < 0) {
+        boolean isExitingDown = y + this.radius + dy > frameUpperLeftCornerY + frame.getHeight();
+        boolean isExitingUp = y - this.radius + dy < frameUpperLeftCornerY;
+        if (isExitingDown || isExitingUp) {
             dy = -dy;
         }
         this.setVelocity(dx, dy);
         this.center = this.velocity.applyToPoint(this.center);
+    }
+    /**
+     * Creates a new Ball object with a random center, a random color and a given radius.
+     * @param frame A Frame object. The new Ball will be created in this frame
+     * @param random A Random object used in generating random double values
+     * @param radius An integer representing the new balls' radius
+     * @return A new Ball object representing a random ball
+     */
+    public static Ball generateRandomBall(Frame frame, Random random, int radius) {
+        Point upperLeftCorner = frame.getUpperLeftCorner();
+        double upperLeftCornerX = upperLeftCorner.getX();
+        double upperLeftCornerY = upperLeftCorner.getY();
+        Point adjustedUpperLeftCorner = new Point(upperLeftCornerX + radius, upperLeftCornerY + radius);
+        int adjustedWidth = frame.getWidth() - 2 * radius;
+        int adjustedHeight = frame.getHeight() - 2 * radius;
+        Frame adjustedFrame = new Frame(adjustedUpperLeftCorner, adjustedWidth, adjustedHeight, null);
+        Point center = Point.generateRandomPoint(adjustedFrame, random);
+        return new Ball(center, radius, Util.createRandomColor(random));
     }
 }

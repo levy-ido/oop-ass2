@@ -1,5 +1,5 @@
 /**
- * Representing a ball Object's velocity.
+ * Representing an objects' velocity.
  */
 public class Velocity {
     private final double dx;
@@ -15,8 +15,8 @@ public class Velocity {
     }
     /**
      * Constructs a new Velocity object corresponding to the given angle and speed.
-     * @param angle A double representing the direction of movement
-     * @param speed A double representing the speed of movement
+     * @param angle A double representing an angle in degrees
+     * @param speed A double representing speed
      * @return A new Velocity object corresponding to the given angle and speed.
      */
     public static Velocity fromAngleAndSpeed(double angle, double speed) {
@@ -25,21 +25,21 @@ public class Velocity {
         return new Velocity(dx, dy);
     }
     /**
-     * Applies the Velocity object's data to a Point object.
-     * @param p A Point object to apply this velocity to
-     * @return A new Point object whose coordinates are (x + dx, y + dy)
+     * Applies this velocity to a point.
+     * @param point A Point object to apply this velocity to
+     * @return A new Point object representing the given points' location after applying this velocity to it
      */
-    public Point applyToPoint(Point p) {
-        return new Point(p.getX() + this.dx, p.getY() + this.dy);
+    public Point applyToPoint(Point point) {
+        return new Point(point.getX() + this.dx, point.getY() + this.dy);
     }
     /**
-     * @return A double representing this velocity's x coordinate rate of change
+     * @return A double representing this velocitys' x coordinate rate of change
      */
     public double dx() {
         return dx;
     }
     /**
-     * @return A double representing this velocity's y coordinate rate of change
+     * @return A double representing this velocitys' y coordinate rate of change
      */
     public double dy() {
         return dy;
