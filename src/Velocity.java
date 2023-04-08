@@ -17,7 +17,7 @@ public class Velocity {
      * Constructs a new Velocity object corresponding to the given angle and speed.
      * @param angle A double representing an angle in degrees
      * @param speed A double representing speed
-     * @return A new Velocity object corresponding to the given angle and speed.
+     * @return A new Velocity object corresponding to the given angle and speed
      */
     public static Velocity fromAngleAndSpeed(double angle, double speed) {
         double dx = Math.cos(angle) * speed;
@@ -33,13 +33,13 @@ public class Velocity {
         return new Point(point.getX() + this.dx, point.getY() + this.dy);
     }
     /**
-     * @return A double representing this velocitys' x coordinate rate of change
+     * @return A double representing this velocitys' x-coordinate rate of change
      */
     public double getDx() {
         return dx;
     }
     /**
-     * @return A double representing this velocitys' y coordinate rate of change
+     * @return A double representing this velocitys' y-coordinate rate of change
      */
     public double getDy() {
         return dy;

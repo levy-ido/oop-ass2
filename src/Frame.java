@@ -28,7 +28,11 @@ public class Frame {
      */
     public void drawOn(DrawSurface drawSurface) {
         drawSurface.setColor(this.color);
-        drawSurface.fillRectangle((int) upperLeftCorner.getX(), (int) upperLeftCorner.getY(), width, height);
+        drawSurface.fillRectangle(
+                (int) this.upperLeftCorner.getX(),
+                (int) this.upperLeftCorner.getY(),
+                this.width,
+                this.height);
     }
     /**
      * @return An integer representing this frames' width

@@ -1,5 +1,4 @@
 import biuoop.DrawSurface;
-
 import java.awt.Color;
 import java.util.Random;
 /**
@@ -107,9 +106,9 @@ public class Line {
     public boolean isIntersecting(Line other) {
         if (this.isParallel(other)) {
             if (Double.compare(this.intercept(), other.intercept()) == 0) {
-                boolean cmpRes1 = Double.compare(this.start.getX(), other.end.getX()) <= 0;
-                boolean cmpRes2 = Double.compare(this.end.getX(), other.start.getX()) >= 0;
-                return cmpRes1 && cmpRes2;
+                boolean endsBeforeOther = Double.compare(this.end.getX(), other.start.getX()) < 0;
+                boolean startsAfterOther = Double.compare(this.start.getX(), other.end.getX()) > 0;
+                return !endsBeforeOther && !startsAfterOther;
             }
             return false;
         }
@@ -118,7 +117,7 @@ public class Line {
     }
     /**
      * Returns the point of intersection between this line segment and another line segment.
-     * @param other A Line object representing the other line segment to check intersection with
+     * @param other A Line object representing the other line segment to compute intersection point with
      * @return A Point object representing the single point of intersection if it exists, otherwise returns null
      */
     public Point intersectionWith(Line other) {
@@ -161,7 +160,7 @@ public class Line {
     /**
      * Creates a new Line object with random ends.
      * @param frame A Frame object. The new line segment will be created in this frame
-     * @param random A Random object used in generating random double values
+     * @param random A Random object used in generating random points
      * @return A new Line object representing a random line segment
      */
     public static Line generateRandomLine(Frame frame, Random random) {

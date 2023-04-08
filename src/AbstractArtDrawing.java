@@ -11,7 +11,10 @@ public class AbstractArtDrawing {
     private static final int NUM_OF_LINES = 10;
     private static final int CIRCLE_RADIUS = 3;
     /**
-     * @param args A string array. ignored
+     * This method generates an abstract art drawing by randomly generating lines and marking their middle points and
+     * intersections.
+     * The drawing is displayed on a GUI window.
+     * @param args This parameter is not used.
      */
     public static void main(String[] args) {
         Frame frame = new Frame(Frame.GUI_UPPER_LEFT, WIDTH, HEIGHT, null);
