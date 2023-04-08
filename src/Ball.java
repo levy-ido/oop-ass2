@@ -1,7 +1,6 @@
 import biuoop.DrawSurface;
 import java.awt.Color;
 import java.util.Random;
-
 /**
  * Represents a ball.
  */
@@ -76,7 +75,7 @@ public class Ball {
      * @param dy A double representing the y-coordinate rate of change
      */
     public void setVelocity(double dx, double dy) {
-        setVelocity(new Velocity(dx, dy));
+        this.setVelocity(new Velocity(dx, dy));
     }
     /**
      * @return A Velocity object representing this balls' velocity
@@ -93,7 +92,7 @@ public class Ball {
     /**
      * Creates a new Ball object with a random center, a random color and a given radius.
      * @param frame A Frame object representing the frame to create the ball in
-     * @param random A Random object used in generating random double values
+     * @param random A Random object used in generating a random point
      * @param radius An integer representing the new balls' radius
      * @return A new Ball object representing a random ball
      */
@@ -108,7 +107,6 @@ public class Ball {
         Point center = Point.generateRandomPoint(adjustedFrame, random);
         return new Ball(center, radius, Util.createRandomColor(random));
     }
-
     /**
      * Keeps this ball from leaving the given frame.
      * @param frame A Frame object providing boundaries for this ball
@@ -117,11 +115,10 @@ public class Ball {
         int x = this.getX();
         Point frameUpperLeftCorner = frame.getUpperLeftCorner();
         int frameUpperLeftCornerX = (int) frameUpperLeftCorner.getX();
-        Velocity velocity = this.getVelocity();
-        double dx = velocity.getDx();
+        double dx = this.velocity.getDx();
         int y = this.getY();
         int frameUpperLeftCornerY = (int) frameUpperLeftCorner.getY();
-        double dy = velocity.getDy();
+        double dy = this.velocity.getDy();
         if (x - this.radius < frameUpperLeftCornerX || x + this.radius > frameUpperLeftCornerX + frame.getWidth()) {
             dx = -dx;
         }

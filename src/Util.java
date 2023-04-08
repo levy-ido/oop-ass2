@@ -1,5 +1,4 @@
 import biuoop.DrawSurface;
-
 import java.awt.Color;
 import java.util.Random;
 /**
@@ -20,15 +19,16 @@ public class Util {
         return new Color(r, g, b);
     }
     /**
-     * @param integers A String array containing integers
-     * @return An integer array containing the above integers
+     * Parses an array of strings into an array of integers.
+     * @param stringArray The array of strings to parse
+     * @return An array of integers
      */
-    public static int[] parseInt(String[] integers) {
-        int[] parsedIntegers = new int[integers.length];
-        for (int i = 0; i < parsedIntegers.length; ++i) {
-            parsedIntegers[i] = Integer.parseInt(integers[i]);
+    public static int[] parseStringArray(String[] stringArray) {
+        int[] intArray = new int[stringArray.length];
+        for (int i = 0; i < intArray.length; ++i) {
+            intArray[i] = Integer.parseInt(stringArray[i]);
         }
-        return parsedIntegers;
+        return intArray;
     }
     /**
      * Marks a given point with a small circle.
