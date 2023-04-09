@@ -10,7 +10,7 @@ public class MultipleBouncingBallsAnimation {
     private static final int HEIGHT = 600;
     private static final int CRITICAL_RADIUS = 50;
     private static final double MIN_SPEED = 1.0;
-    private static final double DEGREES_IN_CIRCLE = 360.0;
+    private static final double ANGLE_BOUND = 360.0;
     private final Ball[] balls;
     /**
      * Constructs a new MultipleBouncingBallsAnimation object.
@@ -28,7 +28,7 @@ public class MultipleBouncingBallsAnimation {
             } else {
                 speed = MIN_SPEED;
             }
-            double angle = random.nextDouble(DEGREES_IN_CIRCLE);
+            double angle = random.nextDouble(ANGLE_BOUND);
             this.balls[i].setVelocity(Velocity.fromAngleAndSpeed(angle, speed));
         }
     }

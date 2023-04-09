@@ -5,14 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2fb47e9e-6044-491b-a7a1-cba2abdea480" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AbstractArtDrawing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AbstractArtDrawing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Ball.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Ball.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BouncingBallAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BouncingBallAnimation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Frame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Frame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BIUOOPEx2/GeometryTester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BIUOOPEx2/Line.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BIUOOPEx2/Line.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BIUOOPEx2/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BIUOOPEx2/Point.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BIUOOPEx2/Point.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Line.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MultipleBouncingBallsAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MultipleBouncingBallsAnimation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MultipleFramesBouncingBallsAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MultipleFramesBouncingBallsAnimation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Point.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestForAss2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestForAss2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Velocity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Velocity.java" afterDir="false" />
     </list>
@@ -66,6 +68,17 @@
       <recent name="C:\Users\IDOLE\IdeaProjects\BIUOOPEx2\bin" />
       <recent name="C:\Users\IDOLE\IdeaProjects\BIUOOPEx2\src" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="TestForAss2" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="$PROJECT_DIR$/../../../../Program Files/Java/jdk-19" />
+      <option name="MAIN_CLASS_NAME" value="TestForAss2" />
+      <module name="BIUOOPEx2" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

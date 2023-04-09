@@ -7,6 +7,7 @@ import java.util.Random;
 public class Util {
     private static final int MAX_RGB_VAL = 255;
     public static final long MS = 17;
+    public static final double EPSILON = 1e-07;
     /**
      * Creates a random Color object.
      * @param random A Random object used in generating random int values
@@ -40,5 +41,30 @@ public class Util {
     public static void mark(Point point, Color color, DrawSurface drawSurface, int circleRadius) {
         drawSurface.setColor(color);
         drawSurface.fillCircle((int) point.getX(), (int) point.getY(), circleRadius);
+    }
+    /**
+     * Determines whether a given double value is within a specified range.
+     * @param x The double value to be checked
+     * @param a A double representing the lower bound of the range
+     * @param b A double representing the upper bound of the range
+     * @return true if x is between a and b (inclusive), false otherwise
+     */
+    public static boolean isInRange(double x, double a, double b) {
+        return (Util.compareDoubles(x, a) >= 0) && (Util.compareDoubles(x, b) <= 0);
+    }
+    /**
+     * Compares two double values within a set tolerance level.
+     * @param a The first double to compare
+     * @param b The second double to compare
+     * @return 0 if a and b are equal within the set tolerance, -1 if a is less than b, 1 otherwise
+     */
+    public static int compareDoubles(double a, double b) {
+        if (Math.abs(a - b) < EPSILON) {
+            return 0;
+        }
+        if (a < b) {
+            return -1;
+        }
+        return 1;
     }
 }
