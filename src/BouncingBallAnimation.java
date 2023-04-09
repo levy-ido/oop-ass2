@@ -37,13 +37,7 @@ public class BouncingBallAnimation {
      */
     public static void main(String[] args) {
         double x = Double.parseDouble(args[0]);
-        if (x < BALL_RADIUS || x + BALL_RADIUS > WIDTH) {
-            x = BALL_RADIUS;
-        }
         double y = Double.parseDouble(args[1]);
-        if (y < BALL_RADIUS || y + BALL_RADIUS > HEIGHT) {
-            y = BALL_RADIUS;
-        }
         double dx = Double.parseDouble(args[2]);
         double dy = Double.parseDouble(args[3]);
         BouncingBallAnimation.drawAnimation(new Point(x, y), dx, dy);

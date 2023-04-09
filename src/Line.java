@@ -1,6 +1,7 @@
 import biuoop.DrawSurface;
 import java.awt.Color;
 import java.util.Random;
+
 /**
  * Represents a line segment between two points.
  */
@@ -15,8 +16,8 @@ public class Line {
      * @param end A Point object representing the end of the new line segment
      */
     public Line(Point start, Point end) {
-        int xCmpRes = Double.compare(start.getX(), end.getX());
-        int yCmpRes = Double.compare(start.getY(), end.getY());
+        int xCmpRes = Util.compareDoubles(start.getX(), end.getX());
+        int yCmpRes = Util.compareDoubles(start.getY(), end.getY());
         if (xCmpRes < 0 || xCmpRes == 0 && yCmpRes <= 0) {
             this.start = start;
             this.end = end;
@@ -62,6 +63,12 @@ public class Line {
         return this.end;
     }
     /**
+     * @return A Line object representing an inverted version of this line segment
+     */
+    public Line invert() {
+        return new Line(this.start.invert(), this.end.invert());
+    }
+    /**
      * @return A double representing the slope of this line segment
      */
     public double slope() {
@@ -74,46 +81,31 @@ public class Line {
         return this.start.getY() - this.slope() * this.start.getX();
     }
     /**
-     * Checks if this line segment is parallel to another line segment.
-     * @param other A Line object representing the other line to compare for parallelism
-     * @return true if this line segment is parallel to the other line segment, false otherwise
-     */
-    public boolean isParallel(Line other) {
-        return Double.compare(this.slope(), other.slope()) == 0;
-    }
-    /**
-     * Checks whether this line segment intersects a vertical line at the given x-coordinate.
-     * @param x A double representing the x-coordinate of the vertical line to check for intersection
-     * @return true if this line segment intersects the vertical line at the given x-coordinate, false otherwise
-     */
-    public boolean intersectsVerticalLine(double x) {
-        return Double.compare(x, this.start.getX()) >= 0 && Double.compare(x, this.end.getX()) <= 0;
-    }
-    /**
-     * Assuming there's intersection between this line segment and a given other line segment, computes the
-     * x-coordinate of the intersection point.
-     * @param other A Line object representing the other line to compute intersection point x-coordinate with
-     * @return A double representing the intersection points' x-coordinate
-     */
-    public double computeIntersectionX(Line other) {
-        return (other.intercept() - this.intercept()) / (this.slope() - other.slope());
-    }
-    /**
      * Checks whether this line segment is intersecting with another line segment.
      * @param other A Line object representing the other line segment to check for intersection with
      * @return true if this line segment intersects with the other line segment, false otherwise
      */
     public boolean isIntersecting(Line other) {
-        if (this.isParallel(other)) {
-            if (Double.compare(this.intercept(), other.intercept()) == 0) {
-                boolean endsBeforeOther = Double.compare(this.end.getX(), other.start.getX()) < 0;
-                boolean startsAfterOther = Double.compare(this.start.getX(), other.end.getX()) > 0;
-                return !endsBeforeOther && !startsAfterOther;
-            }
+        Vector ab = new Vector(this.start, this.end);
+        Vector cd = new Vector(other.start, other.end);
+        if (Util.compareDoubles(ab.getX(), 0.0) == 0 && Util.compareDoubles(cd.getX(), 0.0) == 0) {
+            return this.invert().isIntersecting(other.invert());
+        }
+        double abCrossCd = ab.crossProduct(cd);
+        if (Util.compareDoubles(abCrossCd, 0.0) != 0) {
+            Vector ac = new Vector(this.start, other.start);
+            double acCrossCd = ac.crossProduct(cd);
+            double abCrossAc = ab.crossProduct(ac);
+            double t = acCrossCd / abCrossCd;
+            double u = -(abCrossAc / abCrossCd);
+            return Util.isInRange(t, 0.0, 1.0) && Util.isInRange(u, 0.0, 1.0);
+        }
+        if (Util.compareDoubles(this.intercept(), other.intercept()) != 0) {
             return false;
         }
-        double intersectionX = this.computeIntersectionX(other);
-        return this.intersectsVerticalLine(intersectionX) && other.intersectsVerticalLine(intersectionX);
+        boolean isThisLeftOfOther = Util.compareDoubles(this.end.getX(), other.start.getX()) < 0;
+        boolean isThisRightOfOther = Util.compareDoubles(this.start.getX(), other.end.getX()) > 0;
+        return !isThisLeftOfOther && !isThisRightOfOther;
     }
     /**
      * Returns the point of intersection between this line segment and another line segment.
@@ -124,18 +116,22 @@ public class Line {
         if (!this.isIntersecting(other)) {
             return null;
         }
-        if (this.isParallel(other)) {
-            if (this.start.equals(other.end)) {
-                return this.start;
-            }
-            if (this.end.equals(other.start)) {
-                return this.end;
-            }
-            return null;
+        Vector ab = new Vector(this.start, this.end);
+        Vector cd = new Vector(other.start, other.end);
+        double abCrossCd = ab.crossProduct(cd);
+        if (Util.compareDoubles(abCrossCd, 0.0) != 0) {
+            Vector ac = new Vector(this.start, other.start);
+            double acCrossCd = ac.crossProduct(cd);
+            double t = acCrossCd / abCrossCd;
+            return this.start.add(ab.scale(t));
         }
-        double intersectionX = this.computeIntersectionX(other);
-        double intersectionY = this.slope() * intersectionX + this.intercept();
-        return new Point(intersectionX, intersectionY);
+        if (this.end.equals(other.start)) {
+            return this.end;
+        }
+        if (this.start.equals(other.end)) {
+            return this.start;
+        }
+        return null;
     }
     /**
      * Returns whether this line segment is equal to the given line segment.

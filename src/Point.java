@@ -31,7 +31,7 @@ public class Point {
      * @return true if the two points are equal, false otherwise
      */
     public boolean equals(Point other) {
-        return Double.compare(this.x, other.x) == 0 && Double.compare(this.y, other.y) == 0;
+        return Util.compareDoubles(this.x, other.x) == 0 && Util.compareDoubles(this.y, other.y) == 0;
     }
     /**
      * @return A double representing the x-coordinate of this point
@@ -56,5 +56,20 @@ public class Point {
         double x = random.nextDouble(upperLeftCorner.x, upperLeftCorner.x + frame.getWidth());
         double y = random.nextDouble(upperLeftCorner.y, upperLeftCorner.y + frame.getHeight());
         return new Point(x, y);
+    }
+    /**
+     * Inverts the coordinates of this point.
+     * @return A new Point object with the x and y coordinates of this point swapped
+     */
+    public Point invert() {
+        return new Point(this.y, this.x);
+    }
+    /**
+     * Adds the specified vector to this point.
+     * @param vector A Vector object to add to this point
+     * @return A new Point object representing the result of the addition
+     */
+    public Point add(Vector vector) {
+        return new Point(this.x + vector.getX(), this.y + vector.getY());
     }
 }
