@@ -1,3 +1,4 @@
+// Ido Levy 318949294
 import biuoop.DrawSurface;
 import biuoop.GUI;
 import biuoop.Sleeper;
@@ -50,8 +51,12 @@ public class MultipleBouncingBallsAnimation {
      * @param args A String array containing integers representing the balls radii
      */
     public static void main(String[] args) {
-        GUI gui = new GUI("Multiple Bouncing Balls Animation", WIDTH, HEIGHT);
         int[] radii = Util.parseStringArray(args);
+        if (!Util.isNatural(radii)) {
+            System.out.print("Ball radii must be positive integers.");
+            return;
+        }
+        GUI gui = new GUI("Multiple Bouncing Balls Animation", WIDTH, HEIGHT);
         Frame frame = new Frame(Frame.GUI_UPPER_LEFT, WIDTH, HEIGHT, null);
         Random random = new Random();
         MultipleBouncingBallsAnimation animation = new MultipleBouncingBallsAnimation(radii, frame, random);
