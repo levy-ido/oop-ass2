@@ -1,3 +1,4 @@
+// Ido Levy 318949294
 import biuoop.DrawSurface;
 import biuoop.GUI;
 import biuoop.Sleeper;
@@ -32,14 +33,24 @@ public class BouncingBallAnimation {
     }
     /**
      * Parses the command line arguments and starts the animation.
-     * The command line arguments should be in the following format: [startingPointX, startingPointY, dx, dy].
+     * The command line arguments should be in the following format: [startingPointX, startingPointY, dx, dy] where
+     * startingPointX, startingPointY, dx and dy are integers.
      * @param args A String array representing the command line arguments
      */
     public static void main(String[] args) {
-        double x = Double.parseDouble(args[0]);
-        double y = Double.parseDouble(args[1]);
-        double dx = Double.parseDouble(args[2]);
-        double dy = Double.parseDouble(args[3]);
+        int x = Integer.parseInt(args[0]);
+        int y = Integer.parseInt(args[1]);
+        if (x < BALL_RADIUS || x + BALL_RADIUS > WIDTH || y < BALL_RADIUS || y + BALL_RADIUS > HEIGHT) {
+            System.out.println("WIDTH is set to " + WIDTH);
+            System.out.println("HEIGHT is set to " + HEIGHT);
+            System.out.println("BALL_RADIUS is set to " + BALL_RADIUS);
+            System.out.println("Therefore:");
+            System.out.println("Ball x-coordinate must be in [" + BALL_RADIUS + ", " + (WIDTH - BALL_RADIUS) + "]");
+            System.out.print("Ball y-coordinate must be in [" + BALL_RADIUS + ", " + (HEIGHT - BALL_RADIUS) + "]");
+            return;
+        }
+        int dx = Integer.parseInt(args[2]);
+        int dy = Integer.parseInt(args[3]);
         BouncingBallAnimation.drawAnimation(new Point(x, y), dx, dy);
     }
 }

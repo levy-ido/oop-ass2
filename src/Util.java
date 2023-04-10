@@ -67,4 +67,17 @@ public class Util {
         }
         return 1;
     }
+    /**
+     * Checks whether an array is composed of solely natural numbers or not.
+     * @param intArray An integer array
+     * @return true if intArray is composed of solely natural numbers, false otherwise
+     */
+    public static boolean isNatural(int[] intArray) {
+        for (int num: intArray) {
+            if (num <= 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
