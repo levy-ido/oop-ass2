@@ -1,12 +1,15 @@
 import java.util.Random;
+
 /**
  * Represents a point in a two-dimensional coordinate system.
  */
 public class Point {
     private final double x;
     private final double y;
+
     /**
      * Constructs a new Point object with the given x and y coordinates.
+     *
      * @param x A double representing the x-coordinate of the new point
      * @param y A double representing the y-coordinate of the new point
      */
@@ -14,40 +17,11 @@ public class Point {
         this.x = x;
         this.y = y;
     }
-    /**
-     * Calculates the distance between this point and a given other point.
-     * @param other A Point object representing the point to calculate the distance to
-     * @return A double representing the distance from this point to the other point
-     */
-    public double distance(Point other) {
-        double dx = other.x - this.x;
-        double dy = other.y - this.y;
-        return Math.sqrt(dx * dx + dy * dy);
-    }
-    /**
-     * Compares this point with a given other point for equality. Two points are considered equal if their x and y
-     * coordinates are exactly the same, up to a small difference.
-     * @param other A Point object representing the other point to compare to
-     * @return true if the two points are equal, false otherwise
-     */
-    public boolean equals(Point other) {
-        return Util.compareDoubles(this.x, other.x) == 0 && Util.compareDoubles(this.y, other.y) == 0;
-    }
-    /**
-     * @return A double representing the x-coordinate of this point
-     */
-    public double getX() {
-        return this.x;
-    }
-    /**
-     * @return A double representing the y-coordinate of this point
-     */
-    public double getY() {
-        return this.y;
-    }
+
     /**
      * Creates a new Point object with random x and y coordinates.
-     * @param frame A Frame object. The new point will be created in this frame
+     *
+     * @param frame  A Frame object. The new point will be created in this frame
      * @param random A Random object used to generate random double values
      * @return A new Point object with random x and y coordinates
      */
@@ -57,15 +31,56 @@ public class Point {
         double y = random.nextDouble(upperLeftCorner.y, upperLeftCorner.y + frame.getHeight());
         return new Point(x, y);
     }
+
+    /**
+     * Calculates the distance between this point and a given other point.
+     *
+     * @param other A Point object representing the point to calculate the distance to
+     * @return A double representing the distance from this point to the other point
+     */
+    public double distance(Point other) {
+        double dx = other.x - this.x;
+        double dy = other.y - this.y;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    /**
+     * Compares this point with a given other point for equality. Two points are considered equal if their x and y
+     * coordinates are exactly the same, up to a small difference.
+     *
+     * @param other A Point object representing the other point to compare to
+     * @return true if the two points are equal, false otherwise
+     */
+    public boolean equals(Point other) {
+        return Util.compareDoubles(this.x, other.x) == 0 && Util.compareDoubles(this.y, other.y) == 0;
+    }
+
+    /**
+     * @return A double representing the x-coordinate of this point
+     */
+    public double getX() {
+        return this.x;
+    }
+
+    /**
+     * @return A double representing the y-coordinate of this point
+     */
+    public double getY() {
+        return this.y;
+    }
+
     /**
      * Inverts the coordinates of this point.
+     *
      * @return A new Point object with the x and y coordinates of this point swapped
      */
     public Point invert() {
         return new Point(this.y, this.x);
     }
+
     /**
      * Adds the specified vector to this point.
+     *
      * @param vector A Vector object to add to this point
      * @return A new Point object representing the result of the addition
      */

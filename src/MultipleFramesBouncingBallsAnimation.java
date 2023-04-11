@@ -1,4 +1,5 @@
 // Ido Levy 318949294
+
 import biuoop.DrawSurface;
 import biuoop.GUI;
 import biuoop.Sleeper;
@@ -18,8 +19,10 @@ public class MultipleFramesBouncingBallsAnimation {
     private static final Point YELLOW_UPPER_LEFT = new Point(450.0, 450.0);
     private static final int YELLOW_WIDTH = 150;
     private static final int YELLOW_HEIGHT = 150;
+
     /**
      * The main method that initializes the animation and draws it on the screen.
+     *
      * @param args A String array containing integers representing the balls radii
      */
     public static void main(String[] args) {

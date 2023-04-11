@@ -1,8 +1,13 @@
 // Ido Levy 318949294
+
+
 import biuoop.GUI;
 import biuoop.DrawSurface;
+
 import java.util.Random;
 import java.awt.Color;
+
+
 /**
  * Represents an abstract art drawing.
  */
@@ -11,10 +16,12 @@ public class AbstractArtDrawing {
     private static final int HEIGHT = 300;
     private static final int NUM_OF_LINES = 10;
     private static final int CIRCLE_RADIUS = 3;
+
     /**
      * This method generates an abstract art drawing by randomly generating lines and marking their middle points and
      * intersections.
      * The drawing is displayed on a GUI window.
+     *
      * @param args This parameter is not used.
      */
     public static void main(String[] args) {

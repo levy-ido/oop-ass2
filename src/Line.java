@@ -1,4 +1,5 @@
 import biuoop.DrawSurface;
+
 import java.awt.Color;
 import java.util.Random;
 
@@ -8,12 +9,14 @@ import java.util.Random;
 public class Line {
     private final Point start;
     private final Point end;
+
     /**
      * Constructs a new Line object with a given start and end points.
      * Makes sure that the starting point is to the left of the ending point.
      * If the start and end points have the same x-coordinate the starting point will be below the ending point.
+     *
      * @param start A Point object representing the start of the new line segment
-     * @param end A Point object representing the end of the new line segment
+     * @param end   A Point object representing the end of the new line segment
      */
     public Line(Point start, Point end) {
         int xCmpRes = Util.compareDoubles(start.getX(), end.getX());
@@ -27,8 +30,10 @@ public class Line {
             this.end = start;
         }
     }
+
     /**
      * Constructs a new Line object with the specified start and end points.
+     *
      * @param x1 A double representing the x-coordinate of the start point of the new line segment
      * @param y1 A double representing the y-coordinate of the start point of the new line segment
      * @param x2 A double representing the x-coordinate of the end point of the new line segment
@@ -37,51 +42,74 @@ public class Line {
     public Line(double x1, double y1, double x2, double y2) {
         this(new Point(x1, y1), new Point(x2, y2));
     }
+
+    /**
+     * Creates a new Line object with random ends.
+     *
+     * @param frame  A Frame object. The new line segment will be created in this frame
+     * @param random A Random object used in generating random points
+     * @return A new Line object representing a random line segment
+     */
+    public static Line generateRandomLine(Frame frame, Random random) {
+        Point start = Point.generateRandomPoint(frame, random);
+        Point end = Point.generateRandomPoint(frame, random);
+        return new Line(start, end);
+    }
+
     /**
      * Calculates the length of this line segment.
+     *
      * @return A double representing the length of this line segment
      */
     public double length() {
         return this.start.distance(this.end);
     }
+
     /**
      * @return A Point object representing the point in the middle of this line segment
      */
     public Point middle() {
         return new Point((this.start.getX() + this.end.getX()) / 2, (this.start.getY() + this.end.getY()) / 2);
     }
+
     /**
      * @return A Point object representing the starting point of this line segment
      */
     public Point start() {
         return this.start;
     }
+
     /**
      * @return A Point object representing the ending point of this line segment
      */
     public Point end() {
         return this.end;
     }
+
     /**
      * @return A Line object representing an inverted version of this line segment
      */
     public Line invert() {
         return new Line(this.start.invert(), this.end.invert());
     }
+
     /**
      * @return A double representing the slope of this line segment
      */
     public double slope() {
         return (this.end.getY() - this.start.getY()) / (this.end.getX() - this.start.getX());
     }
+
     /**
      * @return A double representing the intercept of this line segment
      */
     public double intercept() {
         return this.start.getY() - this.slope() * this.start.getX();
     }
+
     /**
      * Checks whether this line segment is intersecting with another line segment.
+     *
      * @param other A Line object representing the other line segment to check for intersection with
      * @return true if this line segment intersects with the other line segment, false otherwise
      */
@@ -107,8 +135,10 @@ public class Line {
         boolean isThisRightOfOther = Util.compareDoubles(this.start.getX(), other.end.getX()) > 0;
         return !isThisLeftOfOther && !isThisRightOfOther;
     }
+
     /**
      * Returns the point of intersection between this line segment and another line segment.
+     *
      * @param other A Line object representing the other line segment to compute intersection point with
      * @return A Point object representing the single point of intersection if it exists, otherwise returns null
      */
@@ -133,16 +163,20 @@ public class Line {
         }
         return null;
     }
+
     /**
      * Returns whether this line segment is equal to the given line segment.
+     *
      * @param other A Line object representing the other line segment to compare to
      * @return true if the line segments are equal, false otherwise
      */
     public boolean equals(Line other) {
         return this.start.equals(other.start) && this.end.equals(other.end);
     }
+
     /**
      * Draws this line segment.
+     *
      * @param drawSurface A DrawSurface object used for drawing
      */
     public void drawOn(DrawSurface drawSurface) {
@@ -152,16 +186,5 @@ public class Line {
                 (int) this.start.getY(),
                 (int) this.end.getX(),
                 (int) this.end.getY());
-    }
-    /**
-     * Creates a new Line object with random ends.
-     * @param frame A Frame object. The new line segment will be created in this frame
-     * @param random A Random object used in generating random points
-     * @return A new Line object representing a random line segment
-     */
-    public static Line generateRandomLine(Frame frame, Random random) {
-        Point start = Point.generateRandomPoint(frame, random);
-        Point end = Point.generateRandomPoint(frame, random);
-        return new Line(start, end);
     }
 }

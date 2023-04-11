@@ -7,14 +7,14 @@
     <copyLibs>true</copyLibs>
     <option name="thirdPartyClasspath" />
     <option name="activeLocationIds">
-      <option value="af1bf523-7a4e-4662-95c9-662fc9a17c4d" />
+      <option value="30781cf3-714a-4b98-9c73-b93fed63552a" />
     </option>
     <option name="locations">
       <list>
         <ConfigurationLocation id="bundled-sun-checks" type="BUNDLED" scope="All" description="Sun Checks">(bundled)</ConfigurationLocation>
         <ConfigurationLocation id="bundled-google-checks" type="BUNDLED" scope="All" description="Google Checks">(bundled)</ConfigurationLocation>
-        <ConfigurationLocation id="af1bf523-7a4e-4662-95c9-662fc9a17c4d" type="LOCAL_FILE" scope="All" description="biuoop.xml">
-          $PROJECT_DIR$/../BIUOOPEx1/biuoop.xml
+        <ConfigurationLocation id="30781cf3-714a-4b98-9c73-b93fed63552a" type="LOCAL_FILE" scope="All" description="checkstyle">
+          $PROJECT_DIR$/biuoop.xml
           <option name="properties">
             <map>
               <entry key="org.checkstyle.sun.suppressionfilter.config" value="" />
