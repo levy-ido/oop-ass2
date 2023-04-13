@@ -11,14 +11,16 @@ import java.util.Random;
  * Represents a multiple frames bouncing balls animation.
  */
 public class MultipleFramesBouncingBallsAnimation {
-    private static final int WIDTH = 800;
-    private static final int HEIGHT = 600;
     private static final Point GREY_UPPER_LEFT = new Point(50.0, 50.0);
     private static final int GREY_WIDTH = 450;
     private static final int GREY_HEIGHT = 450;
     private static final Point YELLOW_UPPER_LEFT = new Point(450.0, 450.0);
     private static final int YELLOW_WIDTH = 150;
     private static final int YELLOW_HEIGHT = 150;
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 600;
+    private static final int MIN_RADIUS = 3;
+    private static final int MAX_RADIUS = 38;
 
     /**
      * Builds a multiple bouncing balls animation with the given radii for the balls.
@@ -43,11 +45,11 @@ public class MultipleFramesBouncingBallsAnimation {
      * @param args A String array containing integers representing the balls radii
      */
     public static void main(String[] args) {
-        GUI gui = new GUI("Multiple Frames Bouncing Balls Animation", WIDTH, HEIGHT);
         Frame grayFrame = new Frame(GREY_UPPER_LEFT, GREY_WIDTH, GREY_HEIGHT, Color.GRAY);
         int[] radii = Util.parseStringArray(args);
-        if (!Util.isNatural(radii)) {
-            System.out.print("Ball radii must be positive integers.");
+        if (!Util.isInRange(radii, MIN_RADIUS, MAX_RADIUS)) {
+            System.out.println("One of the balls radius is not right");
+            System.out.print("Try entering values in (" + MIN_RADIUS + " ," + MAX_RADIUS + ")");
             return;
         }
         Random rand = new Random();
@@ -55,6 +57,7 @@ public class MultipleFramesBouncingBallsAnimation {
         MultipleBouncingBallsAnimation grayAnim = build(radii, grayFrame, rand, half, 0);
         Frame yellowFrame = new Frame(YELLOW_UPPER_LEFT, YELLOW_WIDTH, YELLOW_HEIGHT, Color.YELLOW);
         MultipleBouncingBallsAnimation yellowAnim = build(radii, yellowFrame, rand, radii.length - half, half);
+        GUI gui = new GUI("Multiple Frames Bouncing Balls Animation", WIDTH, HEIGHT);
         Sleeper sleeper = new Sleeper();
         while (true) {
             DrawSurface drawSurface = gui.getDrawSurface();

@@ -12,6 +12,8 @@ public class MultipleBouncingBallsAnimation {
     private static final int CRITICAL_RADIUS = 50;
     private static final double MIN_SPEED = 1.0;
     private static final double ANGLE_BOUND = 360.0;
+    private static final int MIN_RADIUS = 3;
+    private static final int MAX_RADIUS = 150;
     private final Ball[] balls;
     /**
      * Constructs a new MultipleBouncingBallsAnimation object.
@@ -52,8 +54,9 @@ public class MultipleBouncingBallsAnimation {
      */
     public static void main(String[] args) {
         int[] radii = Util.parseStringArray(args);
-        if (!Util.isNatural(radii)) {
-            System.out.print("Ball radii must be positive integers.");
+        if (!Util.isInRange(radii, MIN_RADIUS, MAX_RADIUS)) {
+            System.out.println("One of the balls radius is not right");
+            System.out.print("Try entering values in (" + MIN_RADIUS + ", " + MAX_RADIUS + ")");
             return;
         }
         GUI gui = new GUI("Multiple Bouncing Balls Animation", WIDTH, HEIGHT);

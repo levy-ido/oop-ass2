@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="2fb47e9e-6044-491b-a7a1-cba2abdea480" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BouncingBallAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BouncingBallAnimation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MultipleBouncingBallsAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MultipleBouncingBallsAnimation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MultipleFramesBouncingBallsAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MultipleFramesBouncingBallsAnimation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +77,7 @@
       <workItem from="1681381333742" duration="233000" />
       <workItem from="1681390799236" duration="94000" />
       <workItem from="1681391959944" duration="1866000" />
-      <workItem from="1681405161468" duration="3318000" />
+      <workItem from="1681405161468" duration="9542000" />
     </task>
     <servers />
   </component>

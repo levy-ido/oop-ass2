@@ -81,14 +81,16 @@ public class Util {
     }
 
     /**
-     * Checks whether an array is composed of solely natural numbers or not.
+     * Checks whether all the integers in the given array are in the range (a,b).
      *
-     * @param intArray An integer array
-     * @return true if intArray is composed of solely natural numbers, false otherwise
+     * @param intArray the array of integers to check
+     * @param a        the lower bound of the range
+     * @param b        the upper bound of the range
+     * @return true if all the integers in the array are in the range (a,b), false otherwise
      */
-    public static boolean isNatural(int[] intArray) {
+    public static boolean isInRange(int[] intArray, int a, int b) {
         for (int num : intArray) {
-            if (num <= 0) {
+            if (num <= a || num >= b) {
                 return false;
             }
         }
