@@ -30,9 +30,9 @@ public class BouncingBallAnimation {
         while (true) {
             DrawSurface drawSurface = gui.getDrawSurface();
             ball.drawOn(drawSurface);
+            gui.show(drawSurface);
             ball.moveOneStep();
             ball.keepInFrame(frame);
-            gui.show(drawSurface);
             sleeper.sleepFor(Util.MS);
         }
     }

@@ -21,28 +21,40 @@ public class MultipleFramesBouncingBallsAnimation {
     private static final int YELLOW_HEIGHT = 150;
 
     /**
+     * Builds a multiple bouncing balls animation with the given radii for the balls.
+     *
+     * @param radii An array of integers representing the radii of the balls
+     * @param frame The frame where the animation should take place
+     * @param rand  A Random object used to randomize the balls' starting positions and velocities
+     * @param balls The number of balls to animate
+     * @param from  The starting index of the balls' radii in the radii array
+     * @return A MultipleBouncingBallsAnimation object representing the animation
+     */
+    public static MultipleBouncingBallsAnimation build(int[] radii, Frame frame, Random rand, int balls, int from) {
+        int[] frameRadii = new int[balls];
+        System.arraycopy(radii, from, frameRadii, 0, balls);
+        return new MultipleBouncingBallsAnimation(frameRadii, frame, rand);
+
+    }
+
+    /**
      * The main method that initializes the animation and draws it on the screen.
      *
      * @param args A String array containing integers representing the balls radii
      */
     public static void main(String[] args) {
+        GUI gui = new GUI("Multiple Frames Bouncing Balls Animation", WIDTH, HEIGHT);
         Frame grayFrame = new Frame(GREY_UPPER_LEFT, GREY_WIDTH, GREY_HEIGHT, Color.GRAY);
         int[] radii = Util.parseStringArray(args);
         if (!Util.isNatural(radii)) {
             System.out.print("Ball radii must be positive integers.");
             return;
         }
-        GUI gui = new GUI("Multiple Frames Bouncing Balls Animation", WIDTH, HEIGHT);
-        int halfNumberOfBalls = radii.length / 2;
-        int[] grayRadi = new int[halfNumberOfBalls];
-        System.arraycopy(radii, 0, grayRadi, 0, halfNumberOfBalls);
         Random rand = new Random();
-        MultipleBouncingBallsAnimation grayAnim = new MultipleBouncingBallsAnimation(grayRadi, grayFrame, rand);
+        int half = radii.length / 2;
+        MultipleBouncingBallsAnimation grayAnim = build(radii, grayFrame, rand, half, 0);
         Frame yellowFrame = new Frame(YELLOW_UPPER_LEFT, YELLOW_WIDTH, YELLOW_HEIGHT, Color.YELLOW);
-        int ballsLeft = radii.length - halfNumberOfBalls;
-        int[] yellowRadi = new int[ballsLeft];
-        System.arraycopy(radii, halfNumberOfBalls, yellowRadi, 0, ballsLeft);
-        MultipleBouncingBallsAnimation yellowAnim = new MultipleBouncingBallsAnimation(yellowRadi, yellowFrame, rand);
+        MultipleBouncingBallsAnimation yellowAnim = build(radii, yellowFrame, rand, radii.length - half, half);
         Sleeper sleeper = new Sleeper();
         while (true) {
             DrawSurface drawSurface = gui.getDrawSurface();
