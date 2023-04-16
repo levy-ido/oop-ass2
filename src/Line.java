@@ -1,6 +1,7 @@
 import biuoop.DrawSurface;
 
 import java.awt.Color;
+import java.awt.Rectangle;
 import java.util.Random;
 
 /**
@@ -46,13 +47,13 @@ public class Line {
     /**
      * Creates a new Line object with random ends.
      *
-     * @param frame  A Frame object. The new line segment will be created in this frame
+     * @param frame  A Rectangle object. The new line segment will be created in this frame
      * @param random A Random object used in generating random points
      * @return A new Line object representing a random line segment
      */
-    public static Line generateRandomLine(Frame frame, Random random) {
-        Point start = Point.generateRandomPoint(frame, random);
-        Point end = Point.generateRandomPoint(frame, random);
+    public static Line generateRandom(Rectangle frame, Random random) {
+        Point start = Point.generateRandom(frame, random);
+        Point end = Point.generateRandom(frame, random);
         return new Line(start, end);
     }
 
@@ -122,10 +123,8 @@ public class Line {
         double abCrossCd = ab.crossProduct(cd);
         if (Util.compareDoubles(abCrossCd, 0.0) != 0) {
             Vector ac = new Vector(this.start, other.start);
-            double acCrossCd = ac.crossProduct(cd);
-            double abCrossAc = ab.crossProduct(ac);
-            double t = acCrossCd / abCrossCd;
-            double u = -(abCrossAc / abCrossCd);
+            double t = ac.crossProduct(cd) / abCrossCd;
+            double u = -(ab.crossProduct(ac) / abCrossCd);
             return Util.isInRange(t, 0.0, 1.0) && Util.isInRange(u, 0.0, 1.0);
         }
         if (Util.compareDoubles(this.intercept(), other.intercept()) != 0) {
@@ -151,8 +150,7 @@ public class Line {
         double abCrossCd = ab.crossProduct(cd);
         if (Util.compareDoubles(abCrossCd, 0.0) != 0) {
             Vector ac = new Vector(this.start, other.start);
-            double acCrossCd = ac.crossProduct(cd);
-            double t = acCrossCd / abCrossCd;
+            double t = ac.crossProduct(cd) / abCrossCd;
             return this.start.add(ab.scale(t));
         }
         if (this.end.equals(other.start)) {

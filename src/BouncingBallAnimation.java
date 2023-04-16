@@ -4,6 +4,7 @@ import biuoop.DrawSurface;
 import biuoop.GUI;
 import biuoop.Sleeper;
 
+import java.awt.Rectangle;
 import java.awt.Color;
 
 /**
@@ -25,7 +26,7 @@ public class BouncingBallAnimation {
         GUI gui = new GUI("Bouncing Ball Animation", WIDTH, HEIGHT);
         Ball ball = new Ball(start.getX(), start.getY(), BALL_RADIUS, Color.BLACK);
         ball.setVelocity(dx, dy);
-        Frame frame = new Frame(Frame.GUI_UPPER_LEFT, WIDTH, HEIGHT, null);
+        Rectangle frame = new Rectangle(0, 0, WIDTH, HEIGHT);
         Sleeper sleeper = new Sleeper();
         while (true) {
             DrawSurface drawSurface = gui.getDrawSurface();

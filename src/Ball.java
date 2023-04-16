@@ -1,5 +1,6 @@
 import biuoop.DrawSurface;
 
+import java.awt.Rectangle;
 import java.awt.Color;
 import java.util.Random;
 
@@ -40,20 +41,17 @@ public class Ball {
     /**
      * Creates a new Ball object with a random center, a random color and a given radius.
      *
-     * @param frame  A Frame object representing the frame to create the ball in
-     * @param random A Random object used in generating a random point
+     * @param frame  A Rectangle object representing the frame to create the ball in
+     * @param random A Random object used in generating a random point and color
      * @param radius An integer representing the new balls' radius
      * @return A new Ball object representing a random ball
      */
-    public static Ball generateRandomBall(Frame frame, Random random, int radius) {
-        Point upperLeftCorner = frame.getUpperLeftCorner();
-        double upperLeftCornerX = upperLeftCorner.getX();
-        double upperLeftCornerY = upperLeftCorner.getY();
-        Point adjustedUpperLeftCorner = new Point(upperLeftCornerX + radius, upperLeftCornerY + radius);
-        int adjustedWidth = frame.getWidth() - 2 * radius;
-        int adjustedHeight = frame.getHeight() - 2 * radius;
-        Frame adjustedFrame = new Frame(adjustedUpperLeftCorner, adjustedWidth, adjustedHeight, null);
-        Point center = Point.generateRandomPoint(adjustedFrame, random);
+    public static Ball generateRandom(Rectangle frame, Random random, int radius) {
+        Rectangle adjustedFrame = new Rectangle(frame.x + radius,
+                frame.y + radius,
+                frame.width - 2 * radius,
+                frame.height - 2 * radius);
+        Point center = Point.generateRandom(adjustedFrame, random);
         return new Ball(center, radius, Util.createRandomColor(random));
     }
 
@@ -102,7 +100,7 @@ public class Ball {
      * @param dy A double representing the y-coordinate rate of change
      */
     public void setVelocity(double dx, double dy) {
-        this.setVelocity(new Velocity(dx, dy));
+        this.velocity = new Velocity(dx, dy);
     }
 
     /**
@@ -131,20 +129,17 @@ public class Ball {
     /**
      * Keeps this ball from leaving the given frame.
      *
-     * @param frame A Frame object providing boundaries for this ball
+     * @param frame A Rectangle object providing boundaries for this ball
      */
-    public void keepInFrame(Frame frame) {
+    public void keepInFrame(Rectangle frame) {
         int x = this.getX();
-        Point frameUpperLeftCorner = frame.getUpperLeftCorner();
-        int frameUpperLeftCornerX = (int) frameUpperLeftCorner.getX();
         double dx = this.velocity.getDx();
         int y = this.getY();
-        int frameUpperLeftCornerY = (int) frameUpperLeftCorner.getY();
         double dy = this.velocity.getDy();
-        if (x - this.radius < frameUpperLeftCornerX || x + this.radius > frameUpperLeftCornerX + frame.getWidth()) {
+        if (x - this.radius < frame.x || x + this.radius > frame.x + frame.width) {
             dx = -dx;
         }
-        if (y - this.radius < frameUpperLeftCornerY || y + this.radius > frameUpperLeftCornerY + frame.getHeight()) {
+        if (y - this.radius < frame.y || y + this.radius > frame.y + frame.height) {
             dy = -dy;
         }
         this.setVelocity(dx, dy);

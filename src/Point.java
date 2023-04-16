@@ -1,3 +1,4 @@
+import java.awt.Rectangle;
 import java.util.Random;
 
 /**
@@ -21,14 +22,13 @@ public class Point {
     /**
      * Creates a new Point object with random x and y coordinates.
      *
-     * @param frame  A Frame object. The new point will be created in this frame
+     * @param frame  A Rectangle object. The new point will be created in this frame
      * @param random A Random object used to generate random double values
      * @return A new Point object with random x and y coordinates
      */
-    public static Point generateRandomPoint(Frame frame, Random random) {
-        Point upperLeftCorner = frame.getUpperLeftCorner();
-        double x = random.nextDouble(upperLeftCorner.x, upperLeftCorner.x + frame.getWidth());
-        double y = random.nextDouble(upperLeftCorner.y, upperLeftCorner.y + frame.getHeight());
+    public static Point generateRandom(Rectangle frame, Random random) {
+        double x = random.nextDouble(frame.x, frame.x + frame.width);
+        double y = random.nextDouble(frame.y, frame.y + frame.height);
         return new Point(x, y);
     }
 

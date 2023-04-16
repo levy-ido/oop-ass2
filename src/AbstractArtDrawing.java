@@ -4,6 +4,7 @@
 import biuoop.GUI;
 import biuoop.DrawSurface;
 
+import java.awt.Rectangle;
 import java.util.Random;
 import java.awt.Color;
 
@@ -25,13 +26,13 @@ public class AbstractArtDrawing {
      * @param args This parameter is not used.
      */
     public static void main(String[] args) {
-        Frame frame = new Frame(Frame.GUI_UPPER_LEFT, WIDTH, HEIGHT, null);
+        Rectangle frame = new Rectangle(0, 0, WIDTH, HEIGHT);
         Random random = new Random();
         Line[] lines = new Line[NUM_OF_LINES];
         GUI gui = new GUI("Abstract Art Drawing", WIDTH, HEIGHT);
         DrawSurface drawSurface = gui.getDrawSurface();
         for (int i = 0; i < NUM_OF_LINES; ++i) {
-            lines[i] = Line.generateRandomLine(frame, random);
+            lines[i] = Line.generateRandom(frame, random);
             lines[i].drawOn(drawSurface);
             Util.mark(lines[i].middle(), Color.BLUE, drawSurface, CIRCLE_RADIUS);
         }

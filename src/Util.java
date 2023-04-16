@@ -39,7 +39,7 @@ public class Util {
     }
 
     /**
-     * Marks a given point with a small circle.
+     * Marks a given point with a circle.
      *
      * @param point        A Point object representing the point to be marked
      * @param color        A Color object representing the color to mark with
@@ -84,8 +84,8 @@ public class Util {
      * Checks whether all the integers in the given array are in the range (a,b).
      *
      * @param intArray the array of integers to check
-     * @param a        the lower bound of the range
-     * @param b        the upper bound of the range
+     * @param a        An integer representing the lower bound of the range
+     * @param b        An integer representing the upper bound of the range
      * @return true if all the integers in the array are in the range (a,b), false otherwise
      */
     public static boolean isInRange(int[] intArray, int a, int b) {

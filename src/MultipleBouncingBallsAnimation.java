@@ -2,6 +2,8 @@
 import biuoop.DrawSurface;
 import biuoop.GUI;
 import biuoop.Sleeper;
+
+import java.awt.Rectangle;
 import java.util.Random;
 /**
  * Represents a multiple bouncing balls animation.
@@ -18,15 +20,15 @@ public class MultipleBouncingBallsAnimation {
     /**
      * Constructs a new MultipleBouncingBallsAnimation object.
      * @param radii An integer array representing the balls radii
-     * @param frame A Frame object to create the balls in
-     * @param random A Random object used in generating random balls
+     * @param frame A Rectangle object to create the balls in
+     * @param random A Random object used in generating random balls and angles
      */
-    public MultipleBouncingBallsAnimation(int[] radii, Frame frame, Random random) {
+    public MultipleBouncingBallsAnimation(int[] radii, Rectangle frame, Random random) {
         this.balls = new Ball[radii.length];
         for (int i = 0; i < this.balls.length; ++i) {
-            this.balls[i] = Ball.generateRandomBall(frame, random, radii[i]);
+            this.balls[i] = Ball.generateRandom(frame, random, radii[i]);
             double speed;
-            if (radii[i] < CRITICAL_RADIUS) {
+            if (radii[i] <= CRITICAL_RADIUS) {
                 speed = (double) CRITICAL_RADIUS / (double) radii[i];
             } else {
                 speed = MIN_SPEED;
@@ -38,9 +40,9 @@ public class MultipleBouncingBallsAnimation {
     /**
      * Draws a frame of the animation.
      * @param drawSurface A DrawSurface object to draw the animation on
-     * @param frame A Frame object providing boundaries for the balls
+     * @param frame A Rectangle object providing boundaries for the balls
      */
-    public void drawAnimation(DrawSurface drawSurface, Frame frame) {
+    public void drawAnimation(DrawSurface drawSurface, Rectangle frame) {
         for (int i = 0; i < this.balls.length; ++i) {
             this.balls[i].drawOn(drawSurface);
             this.balls[i].moveOneStep();
@@ -60,7 +62,7 @@ public class MultipleBouncingBallsAnimation {
             return;
         }
         GUI gui = new GUI("Multiple Bouncing Balls Animation", WIDTH, HEIGHT);
-        Frame frame = new Frame(Frame.GUI_UPPER_LEFT, WIDTH, HEIGHT, null);
+        Rectangle frame = new Rectangle(0, 0, WIDTH, HEIGHT);
         Random random = new Random();
         MultipleBouncingBallsAnimation animation = new MultipleBouncingBallsAnimation(radii, frame, random);
         Sleeper sleeper = new Sleeper();
