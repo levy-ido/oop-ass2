@@ -20,8 +20,9 @@ public class Line {
      * @param end   A Point object representing the end of the new line segment
      */
     public Line(Point start, Point end) {
-        int xCmpRes = Double.compare(start.getX(), end.getX());
-        if (xCmpRes < 0 || xCmpRes == 0 && Double.compare(start.getY(), end.getY()) <= 0) {
+        DoubleComparer doubleComparer = new DoubleComparer();
+        int xCmpRes = doubleComparer.compare(start.getX(), end.getX());
+        if (xCmpRes < 0 || xCmpRes == 0 && doubleComparer.compare(start.getY(), end.getY()) <= 0) {
             this.start = start;
             this.end = end;
         } else {
@@ -85,10 +86,12 @@ public class Line {
     }
 
     /**
-     * @return A double representing the slope of this line segment
+     * @return A double representing this line segments' y-intercept
      */
-    public double slope() {
-        return (this.end.getY() - this.start.getY()) / (this.end.getX() - this.start.getX());
+    public double intercept() {
+        double x1 = this.start.getX();
+        double y1 = this.start.getY();
+        return y1 - ((this.end.getY() - y1) / (this.end.getX() - x1)) * x1;
     }
 
     /**
@@ -98,26 +101,30 @@ public class Line {
      * @return true if this line segment intersects with the other line segment, false otherwise
      */
     public boolean isIntersecting(Line other) {
-        OrientationCalculator orientationCalculator = new OrientationCalculator();
-        int p1q1p2 = orientationCalculator.calculate(this.start, this.end, other.start);
-        int p1q1q2 = orientationCalculator.calculate(this.start, this.end, other.end);
-        int p2q2p1 = orientationCalculator.calculate(other.start, other.end, this.start);
-        int p2q2q1 = orientationCalculator.calculate(other.start, other.end, this.end);
-        if (p1q1p2 != p1q1q2 && p2q2p1 != p2q2q1) {
-            return true;
+        Vector ab = new Vector(this.start, this.end);
+        Vector cd = new Vector(other.start, other.end);
+        double abCrossCd = ab.product(cd);
+        DoubleComparer doubleComparer = new DoubleComparer();
+        if (doubleComparer.compare(abCrossCd, 0.0) != 0) {
+            Vector ac = new Vector(this.start, other.start);
+            double t = ac.product(cd) / abCrossCd;
+            double u = -(ab.product(ac) / abCrossCd);
+            return doubleComparer.compare(t, 0.0) >= 0
+                    && doubleComparer.compare(t, 1.0) <= 0
+                    && doubleComparer.compare(u, 0.0) >= 0
+                    && doubleComparer.compare(u, 1.0) <= 0;
         }
-        if (
-                p1q1p2 != OrientationCalculator.COLLINEAR
-                        || p1q1q2 != OrientationCalculator.COLLINEAR
-                        || p2q2p1 != OrientationCalculator.COLLINEAR
-                        || p2q2q1 != OrientationCalculator.COLLINEAR
-        ) {
+        double thisStartX = this.start.getX();
+        double thisEndX = this.end.getX();
+        if (doubleComparer.compare(thisStartX, thisEndX) == 0) {
+            return doubleComparer.compare(this.end.getY(), other.start.getY()) >= 0
+                    && doubleComparer.compare(this.start.getY(), other.end.getY()) <= 0;
+        }
+        if (doubleComparer.compare(this.intercept(), other.intercept()) != 0) {
             return false;
         }
-        return Double.compare(this.end.getX(), other.start.getX()) >= 0
-                && Double.compare(this.start.getX(), other.end.getX()) <= 0
-                && Double.compare(this.end.getY(), other.start.getY()) >= 0
-                && Double.compare(this.start.getY(), other.end.getY()) <= 0;
+        return doubleComparer.compare(thisEndX, other.start.getX()) >= 0
+                && doubleComparer.compare(thisStartX, other.end.getX()) <= 0;
     }
 
     /**
@@ -130,15 +137,16 @@ public class Line {
         Vector ab = new Vector(this.start, this.end);
         Vector cd = new Vector(other.start, other.end);
         double abCrossCd = ab.product(cd);
-        if (Double.compare(abCrossCd, 0.0) != 0) {
+        DoubleComparer doubleComparer = new DoubleComparer();
+        if (doubleComparer.compare(abCrossCd, 0.0) != 0) {
             Vector ac = new Vector(this.start, other.start);
             double t = ac.product(cd) / abCrossCd;
             double u = -(ab.product(ac) / abCrossCd);
             if (
-                    Double.compare(t, 0.0) < 0
-                    || Double.compare(t, 1.0) > 0
-                    || Double.compare(u, 0.0) < 0
-                    || Double.compare(u, 1.0) > 0
+                    doubleComparer.compare(t, 0.0) == -1
+                    || doubleComparer.compare(t, 1.0) == 1
+                    || doubleComparer.compare(u, 0.0) == -1
+                    || doubleComparer.compare(u, 1.0) == 1
             ) {
                 return null;
             }

@@ -40,10 +40,6 @@ public class StringArrayParser {
      * @return An array of integers parsed from the given subarray of strings
      */
     public int[] parse(String[] stringArray, int i) {
-        int[] intArray = new int[stringArray.length - i];
-        for (int j = i; j < stringArray.length; ++j) {
-            intArray[j - i] = Integer.parseInt(stringArray[j]);
-        }
-        return intArray;
+        return this.parse(stringArray, i, stringArray.length - i);
     }
 }

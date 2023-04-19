@@ -16,6 +16,7 @@ public class MultipleFramesBouncingBallsAnimation {
     private static final Rectangle YELLOW_FRAME = new Rectangle(450, 450, 150, 150);
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
+    private static final int MIN_RADIUS = 4;
 
     /**
      * The main method that initializes the animation and draws it on the screen.
@@ -25,14 +26,21 @@ public class MultipleFramesBouncingBallsAnimation {
     public static void main(String[] args) {
         Random random = new Random();
         StringArrayParser stringArrayParser = new StringArrayParser();
+        int[] grayAnimationRadii = stringArrayParser.parse(args, 0, args.length / 2);
+        IntArrayModifier intArrayModifier = new IntArrayModifier();
+        intArrayModifier.raise(grayAnimationRadii, MIN_RADIUS);
+        intArrayModifier.cap(grayAnimationRadii, Math.min(GRAY_FRAME.width, GRAY_FRAME.height) / 2 - 1);
         MultipleBouncingBallsAnimation grayAnimation = new MultipleBouncingBallsAnimation(
-                stringArrayParser.parse(args, 0, args.length / 2),
+                grayAnimationRadii,
                 GRAY_FRAME,
                 Color.GRAY,
                 random
         );
+        int[] yellowAnimationRadii = stringArrayParser.parse(args, args.length / 2);
+        intArrayModifier.raise(yellowAnimationRadii, MIN_RADIUS);
+        intArrayModifier.cap(yellowAnimationRadii, Math.min(YELLOW_FRAME.width, YELLOW_FRAME.height) / 2 - 1);
         MultipleBouncingBallsAnimation yellowAnimation = new MultipleBouncingBallsAnimation(
-                stringArrayParser.parse(args, args.length / 2),
+                yellowAnimationRadii,
                 YELLOW_FRAME,
                 Color.YELLOW,
                 random

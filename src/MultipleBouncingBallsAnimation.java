@@ -17,6 +17,7 @@ public class MultipleBouncingBallsAnimation {
     private static final int CRITICAL_RADIUS = 50;
     private static final double MIN_SPEED = 1.0;
     private static final double ANGLE_BOUND = 360.0;
+    private static final int MIN_RADIUS = 4;
     private final Ball[] balls;
 
     /**
@@ -61,8 +62,12 @@ public class MultipleBouncingBallsAnimation {
      */
     public static void main(String[] args) {
         GUI gui = new GUI("Multiple Bouncing Balls Animation", WIDTH, HEIGHT);
+        int[] radii = new StringArrayParser().parse(args);
+        IntArrayModifier intArrayModifier = new IntArrayModifier();
+        intArrayModifier.raise(radii, MIN_RADIUS);
+        intArrayModifier.cap(radii, Math.min(WIDTH, HEIGHT) / 2 - 1);
         MultipleBouncingBallsAnimation multipleBouncingBallsAnimation = new MultipleBouncingBallsAnimation(
-                new StringArrayParser().parse(args),
+                radii,
                 new Rectangle(0, 0, WIDTH, HEIGHT),
                 Color.WHITE,
                 new Random()

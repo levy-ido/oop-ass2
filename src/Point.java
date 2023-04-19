@@ -53,7 +53,8 @@ public class Point {
      * @return true if the two points are equal, false otherwise
      */
     public boolean equals(Point other) {
-        return Double.compare(this.x, other.x) == 0 && Double.compare(this.y, other.y) == 0;
+        DoubleComparer doubleComparer = new DoubleComparer();
+        return doubleComparer.compare(this.x, other.x) == 0 && doubleComparer.compare(this.y, other.y) == 0;
     }
 
     /**
@@ -69,5 +70,4 @@ public class Point {
     public double getY() {
         return this.y;
     }
-
 }

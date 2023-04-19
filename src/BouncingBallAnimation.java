@@ -24,7 +24,7 @@ public class BouncingBallAnimation {
      */
     private static void drawAnimation(Point start, double dx, double dy) {
         GUI gui = new GUI("Bouncing Ball Animation", WIDTH, HEIGHT);
-        Ball ball = new Ball(start.getX(), start.getY(), BALL_RADIUS, Color.BLACK);
+        Ball ball = new Ball(start, BALL_RADIUS, Color.BLACK);
         ball.setVelocity(dx, dy);
         ball.setFrame(new Rectangle(0, 0, WIDTH, HEIGHT));
         Sleeper sleeper = new Sleeper();
@@ -45,10 +45,12 @@ public class BouncingBallAnimation {
      * @param args A String array representing the command line arguments
      */
     public static void main(String[] args) {
-        BouncingBallAnimation.drawAnimation(
-                new Point(Integer.parseInt(args[0]), Integer.parseInt(args[1])),
-                Integer.parseInt(args[2]),
-                Integer.parseInt(args[3])
-        );
+        int x = Integer.parseInt(args[0]);
+        int y = Integer.parseInt(args[1]);
+        if (x < BALL_RADIUS || x + BALL_RADIUS > WIDTH || y < BALL_RADIUS || y + BALL_RADIUS > HEIGHT) {
+            x = BALL_RADIUS;
+            y = BALL_RADIUS;
+        }
+        BouncingBallAnimation.drawAnimation(new Point(x, y), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
     }
 }

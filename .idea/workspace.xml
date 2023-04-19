@@ -4,24 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2fb47e9e-6044-491b-a7a1-cba2abdea480" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ColorGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/OrientationCalculator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/StringArrayParser.java" afterDir="false" />
+    <list default="true" id="2fb47e9e-6044-491b-a7a1-cba2abdea480" name="Changes" comment="Deleted the Util class. Created 3 new classes. Changed isIntersecting and intersectionWith in Line. General tidying of the code. Deleted keepInFrame and generateRandom methods in Ball. Deleted add in Point. Probably I didn't list all the changes I made.">
+      <change afterPath="$PROJECT_DIR$/src/DoubleComparer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/IntArrayModifier.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/oop_ass2/Util.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/oop_ass2/Util.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/oop_ass2/Util.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/oop_ass2/Vector.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/oop_ass2/Vector.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AbstractArtDrawing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AbstractArtDrawing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Ball.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Ball.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/oop_ass2/Velocity.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/oop_ass2/Velocity.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BouncingBallAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BouncingBallAnimation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Line.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MultipleBouncingBallsAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MultipleBouncingBallsAnimation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MultipleFramesBouncingBallsAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MultipleFramesBouncingBallsAnimation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OrientationCalculator.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Point.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Vector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Velocity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Velocity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StringArrayParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/StringArrayParser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,6 +72,16 @@
       <recent name="C:\Users\IDOLE\IdeaProjects\oop_ass2\src" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration name="MultipleBouncingBallsAnimationDebug" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="MultipleBouncingBallsAnimation" />
+      <module name="oop_ass2" />
+      <option name="PROGRAM_PARAMETERS" value="3123131 -402302 23 43 -78" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -95,8 +101,16 @@
       <workItem from="1681405161468" duration="10639000" />
       <workItem from="1681640343718" duration="9915000" />
       <workItem from="1681805907524" duration="17611000" />
-      <workItem from="1681889497584" duration="17726000" />
+      <workItem from="1681889497584" duration="35179000" />
     </task>
+    <task id="LOCAL-00001" summary="Deleted the Util class. Created 3 new classes. Changed isIntersecting and intersectionWith in Line. General tidying of the code. Deleted keepInFrame and generateRandom methods in Ball. Deleted add in Point. Probably I didn't list all the changes I made.">
+      <created>1681917270986</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1681917270986</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -112,6 +126,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Deleted the Util class. Created 3 new classes. Changed isIntersecting and intersectionWith in Line. General tidying of the code. Deleted keepInFrame and generateRandom methods in Ball. Deleted add in Point. Probably I didn't list all the changes I made." />
+    <option name="LAST_COMMIT_MESSAGE" value="Deleted the Util class. Created 3 new classes. Changed isIntersecting and intersectionWith in Line. General tidying of the code. Deleted keepInFrame and generateRandom methods in Ball. Deleted add in Point. Probably I didn't list all the changes I made." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
