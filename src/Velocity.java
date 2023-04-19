@@ -8,8 +8,8 @@ public class Velocity {
     /**
      * Constructs a new Velocity object with the given dx and dy values.
      *
-     * @param dx A double representing the x coordinate rate of change
-     * @param dy A double representing the y coordinate rate of change
+     * @param dx A double representing the x-coordinate rate of change
+     * @param dy A double representing the y-coordinate rate of change
      */
     public Velocity(double dx, double dy) {
         this.dx = dx;
@@ -25,9 +25,7 @@ public class Velocity {
      */
     public static Velocity fromAngleAndSpeed(double angle, double speed) {
         double angleInRadians = Math.toRadians(angle - 90.0);
-        double dx = Math.cos(angleInRadians) * speed;
-        double dy = Math.sin(angleInRadians) * speed;
-        return new Velocity(dx, dy);
+        return new Velocity(Math.cos(angleInRadians) * speed, Math.sin(angleInRadians) * speed);
     }
 
     /**

@@ -4,8 +4,8 @@ import biuoop.DrawSurface;
 import biuoop.GUI;
 import biuoop.Sleeper;
 
-import java.awt.Rectangle;
 import java.awt.Color;
+import java.awt.Rectangle;
 
 /**
  * Represents a bouncing ball animation.
@@ -18,23 +18,22 @@ public class BouncingBallAnimation {
     /**
      * Draws a bouncing ball animation that starts at the given point and moves with the given velocity.
      *
-     * @param start The starting point of the ball
-     * @param dx    The horizontal velocity of the ball
-     * @param dy    The vertical velocity of the ball
+     * @param start A Point object representing the starting point of the ball
+     * @param dx    A double representing the horizontal velocity of the ball
+     * @param dy    A double representing the vertical velocity of the ball
      */
     private static void drawAnimation(Point start, double dx, double dy) {
         GUI gui = new GUI("Bouncing Ball Animation", WIDTH, HEIGHT);
         Ball ball = new Ball(start.getX(), start.getY(), BALL_RADIUS, Color.BLACK);
         ball.setVelocity(dx, dy);
-        Rectangle frame = new Rectangle(0, 0, WIDTH, HEIGHT);
+        ball.setFrame(new Rectangle(0, 0, WIDTH, HEIGHT));
         Sleeper sleeper = new Sleeper();
         while (true) {
             DrawSurface drawSurface = gui.getDrawSurface();
             ball.drawOn(drawSurface);
             gui.show(drawSurface);
             ball.moveOneStep();
-            ball.keepInFrame(frame);
-            sleeper.sleepFor(Util.MS);
+            sleeper.sleepFor(17);
         }
     }
 
@@ -46,19 +45,10 @@ public class BouncingBallAnimation {
      * @param args A String array representing the command line arguments
      */
     public static void main(String[] args) {
-        int x = Integer.parseInt(args[0]);
-        int y = Integer.parseInt(args[1]);
-        if (x < BALL_RADIUS || x + BALL_RADIUS > WIDTH || y < BALL_RADIUS || y + BALL_RADIUS > HEIGHT) {
-            System.out.println("WIDTH is set to " + WIDTH);
-            System.out.println("HEIGHT is set to " + HEIGHT);
-            System.out.println("BALL_RADIUS is set to " + BALL_RADIUS);
-            System.out.println("Therefore:");
-            System.out.println("Ball x-coordinate must be in [" + BALL_RADIUS + ", " + (WIDTH - BALL_RADIUS) + "]");
-            System.out.print("Ball y-coordinate must be in [" + BALL_RADIUS + ", " + (HEIGHT - BALL_RADIUS) + "]");
-            return;
-        }
-        int dx = Integer.parseInt(args[2]);
-        int dy = Integer.parseInt(args[3]);
-        BouncingBallAnimation.drawAnimation(new Point(x, y), dx, dy);
+        BouncingBallAnimation.drawAnimation(
+                new Point(Integer.parseInt(args[0]), Integer.parseInt(args[1])),
+                Integer.parseInt(args[2]),
+                Integer.parseInt(args[3])
+        );
     }
 }

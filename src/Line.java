@@ -20,9 +20,8 @@ public class Line {
      * @param end   A Point object representing the end of the new line segment
      */
     public Line(Point start, Point end) {
-        int xCmpRes = Util.compareDoubles(start.getX(), end.getX());
-        int yCmpRes = Util.compareDoubles(start.getY(), end.getY());
-        if (xCmpRes < 0 || xCmpRes == 0 && yCmpRes <= 0) {
+        int xCmpRes = Double.compare(start.getX(), end.getX());
+        if (xCmpRes < 0 || xCmpRes == 0 && Double.compare(start.getY(), end.getY()) <= 0) {
             this.start = start;
             this.end = end;
         } else {
@@ -51,10 +50,8 @@ public class Line {
      * @param random A Random object used in generating random points
      * @return A new Line object representing a random line segment
      */
-    public static Line generateRandom(Rectangle frame, Random random) {
-        Point start = Point.generateRandom(frame, random);
-        Point end = Point.generateRandom(frame, random);
-        return new Line(start, end);
+    public static Line random(Rectangle frame, Random random) {
+        return new Line(Point.random(frame, random), Point.random(frame, random));
     }
 
     /**
@@ -88,24 +85,10 @@ public class Line {
     }
 
     /**
-     * @return A Line object representing an inverted version of this line segment
-     */
-    public Line invert() {
-        return new Line(this.start.invert(), this.end.invert());
-    }
-
-    /**
      * @return A double representing the slope of this line segment
      */
     public double slope() {
         return (this.end.getY() - this.start.getY()) / (this.end.getX() - this.start.getX());
-    }
-
-    /**
-     * @return A double representing the intercept of this line segment
-     */
-    public double intercept() {
-        return this.start.getY() - this.slope() * this.start.getX();
     }
 
     /**
@@ -115,24 +98,26 @@ public class Line {
      * @return true if this line segment intersects with the other line segment, false otherwise
      */
     public boolean isIntersecting(Line other) {
-        Vector ab = new Vector(this.start, this.end);
-        Vector cd = new Vector(other.start, other.end);
-        if (Util.compareDoubles(ab.getX(), 0.0) == 0 && Util.compareDoubles(cd.getX(), 0.0) == 0) {
-            return this.invert().isIntersecting(other.invert());
+        OrientationCalculator orientationCalculator = new OrientationCalculator();
+        int p1q1p2 = orientationCalculator.calculate(this.start, this.end, other.start);
+        int p1q1q2 = orientationCalculator.calculate(this.start, this.end, other.end);
+        int p2q2p1 = orientationCalculator.calculate(other.start, other.end, this.start);
+        int p2q2q1 = orientationCalculator.calculate(other.start, other.end, this.end);
+        if (p1q1p2 != p1q1q2 && p2q2p1 != p2q2q1) {
+            return true;
         }
-        double abCrossCd = ab.crossProduct(cd);
-        if (Util.compareDoubles(abCrossCd, 0.0) != 0) {
-            Vector ac = new Vector(this.start, other.start);
-            double t = ac.crossProduct(cd) / abCrossCd;
-            double u = -(ab.crossProduct(ac) / abCrossCd);
-            return Util.isInRange(t, 0.0, 1.0) && Util.isInRange(u, 0.0, 1.0);
-        }
-        if (Util.compareDoubles(this.intercept(), other.intercept()) != 0) {
+        if (
+                p1q1p2 != OrientationCalculator.COLLINEAR
+                        || p1q1q2 != OrientationCalculator.COLLINEAR
+                        || p2q2p1 != OrientationCalculator.COLLINEAR
+                        || p2q2q1 != OrientationCalculator.COLLINEAR
+        ) {
             return false;
         }
-        boolean isThisLeftOfOther = Util.compareDoubles(this.end.getX(), other.start.getX()) < 0;
-        boolean isThisRightOfOther = Util.compareDoubles(this.start.getX(), other.end.getX()) > 0;
-        return !isThisLeftOfOther && !isThisRightOfOther;
+        return Double.compare(this.end.getX(), other.start.getX()) >= 0
+                && Double.compare(this.start.getX(), other.end.getX()) <= 0
+                && Double.compare(this.end.getY(), other.start.getY()) >= 0
+                && Double.compare(this.start.getY(), other.end.getY()) <= 0;
     }
 
     /**
@@ -142,16 +127,23 @@ public class Line {
      * @return A Point object representing the single point of intersection if it exists, otherwise returns null
      */
     public Point intersectionWith(Line other) {
-        if (!this.isIntersecting(other)) {
-            return null;
-        }
         Vector ab = new Vector(this.start, this.end);
         Vector cd = new Vector(other.start, other.end);
-        double abCrossCd = ab.crossProduct(cd);
-        if (Util.compareDoubles(abCrossCd, 0.0) != 0) {
+        double abCrossCd = ab.product(cd);
+        if (Double.compare(abCrossCd, 0.0) != 0) {
             Vector ac = new Vector(this.start, other.start);
-            double t = ac.crossProduct(cd) / abCrossCd;
-            return this.start.add(ab.scale(t));
+            double t = ac.product(cd) / abCrossCd;
+            double u = -(ab.product(ac) / abCrossCd);
+            if (
+                    Double.compare(t, 0.0) < 0
+                    || Double.compare(t, 1.0) > 0
+                    || Double.compare(u, 0.0) < 0
+                    || Double.compare(u, 1.0) > 0
+            ) {
+                return null;
+            }
+            ab.scale(t);
+            return new Point(this.start.getX() + ab.getX(), this.start.getY() + ab.getY());
         }
         if (this.end.equals(other.start)) {
             return this.end;
@@ -175,7 +167,7 @@ public class Line {
     /**
      * Draws this line segment.
      *
-     * @param drawSurface A DrawSurface object used for drawing
+     * @param drawSurface A DrawSurface object
      */
     public void drawOn(DrawSurface drawSurface) {
         drawSurface.setColor(Color.BLACK);
@@ -183,6 +175,7 @@ public class Line {
                 (int) this.start.getX(),
                 (int) this.start.getY(),
                 (int) this.end.getX(),
-                (int) this.end.getY());
+                (int) this.end.getY()
+        );
     }
 }

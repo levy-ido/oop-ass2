@@ -1,8 +1,7 @@
 import biuoop.DrawSurface;
 
-import java.awt.Rectangle;
 import java.awt.Color;
-import java.util.Random;
+import java.awt.Rectangle;
 
 /**
  * Represents a ball.
@@ -12,6 +11,7 @@ public class Ball {
     private final Color color;
     private Point center;
     private Velocity velocity;
+    private Rectangle frame;
 
     /**
      * Constructs a new Ball object with the given center, radius and color.
@@ -36,23 +36,6 @@ public class Ball {
      */
     public Ball(double x, double y, int radius, Color color) {
         this(new Point(x, y), radius, color);
-    }
-
-    /**
-     * Creates a new Ball object with a random center, a random color and a given radius.
-     *
-     * @param frame  A Rectangle object representing the frame to create the ball in
-     * @param random A Random object used in generating a random point and color
-     * @param radius An integer representing the new balls' radius
-     * @return A new Ball object representing a random ball
-     */
-    public static Ball generateRandom(Rectangle frame, Random random, int radius) {
-        Rectangle adjustedFrame = new Rectangle(frame.x + radius,
-                frame.y + radius,
-                frame.width - 2 * radius,
-                frame.height - 2 * radius);
-        Point center = Point.generateRandom(adjustedFrame, random);
-        return new Ball(center, radius, Util.createRandomColor(random));
     }
 
     /**
@@ -86,7 +69,7 @@ public class Ball {
     /**
      * Draws this Ball object on the given DrawSurface object.
      *
-     * @param drawSurface A DrawSurface object used for drawing
+     * @param drawSurface A DrawSurface object
      */
     public void drawOn(DrawSurface drawSurface) {
         drawSurface.setColor(this.color);
@@ -120,28 +103,30 @@ public class Ball {
     }
 
     /**
-     * Moves the ball one step according to its velocity.
+     * Moves the ball one step based on its current position and velocity.
+     * If the ball hits a boundary, its velocity is reversed in the corresponding direction.
      */
     public void moveOneStep() {
+        int x = this.getX();
+        double dx = this.velocity.getDx();
+        if (x - this.frame.x < this.radius || this.frame.x + this.frame.width - x < this.radius) {
+            dx = -dx;
+        }
+        int y = this.getY();
+        double dy = this.velocity.getDy();
+        if (y - this.frame.y < this.radius || this.frame.y + this.frame.height - y < this.radius) {
+            dy = -dy;
+        }
+        this.setVelocity(dx, dy);
         this.center = this.velocity.applyToPoint(this.center);
     }
 
     /**
-     * Keeps this ball from leaving the given frame.
+     * Sets this balls' frame to a given Rectangle object.
      *
-     * @param frame A Rectangle object providing boundaries for this ball
+     * @param frame A given Rectangle object
      */
-    public void keepInFrame(Rectangle frame) {
-        int x = this.getX();
-        double dx = this.velocity.getDx();
-        int y = this.getY();
-        double dy = this.velocity.getDy();
-        if (x - this.radius < frame.x || x + this.radius > frame.x + frame.width) {
-            dx = -dx;
-        }
-        if (y - this.radius < frame.y || y + this.radius > frame.y + frame.height) {
-            dy = -dy;
-        }
-        this.setVelocity(dx, dy);
+    public void setFrame(Rectangle frame) {
+        this.frame = frame;
     }
 }

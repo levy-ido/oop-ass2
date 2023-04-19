@@ -26,10 +26,11 @@ public class Point {
      * @param random A Random object used to generate random double values
      * @return A new Point object with random x and y coordinates
      */
-    public static Point generateRandom(Rectangle frame, Random random) {
-        double x = random.nextDouble(frame.x, frame.x + frame.width);
-        double y = random.nextDouble(frame.y, frame.y + frame.height);
-        return new Point(x, y);
+    public static Point random(Rectangle frame, Random random) {
+        return new Point(
+                random.nextDouble(frame.x, frame.x + frame.width),
+                random.nextDouble(frame.y, frame.y + frame.height)
+        );
     }
 
     /**
@@ -52,7 +53,7 @@ public class Point {
      * @return true if the two points are equal, false otherwise
      */
     public boolean equals(Point other) {
-        return Util.compareDoubles(this.x, other.x) == 0 && Util.compareDoubles(this.y, other.y) == 0;
+        return Double.compare(this.x, other.x) == 0 && Double.compare(this.y, other.y) == 0;
     }
 
     /**
@@ -69,22 +70,4 @@ public class Point {
         return this.y;
     }
 
-    /**
-     * Inverts the coordinates of this point.
-     *
-     * @return A new Point object with the x and y coordinates of this point swapped
-     */
-    public Point invert() {
-        return new Point(this.y, this.x);
-    }
-
-    /**
-     * Adds the specified vector to this point.
-     *
-     * @param vector A Vector object to add to this point
-     * @return A new Point object representing the result of the addition
-     */
-    public Point add(Vector vector) {
-        return new Point(this.x + vector.getX(), this.y + vector.getY());
-    }
 }

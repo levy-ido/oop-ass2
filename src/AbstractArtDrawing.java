@@ -1,13 +1,11 @@
 // Ido Levy 318949294
 
-
-import biuoop.GUI;
 import biuoop.DrawSurface;
+import biuoop.GUI;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.Random;
-import java.awt.Color;
-
 
 /**
  * Represents an abstract art drawing.
@@ -23,7 +21,7 @@ public class AbstractArtDrawing {
      * intersections.
      * The drawing is displayed on a GUI window.
      *
-     * @param args This parameter is not used.
+     * @param args A String array. This parameter is not used.
      */
     public static void main(String[] args) {
         Rectangle frame = new Rectangle(0, 0, WIDTH, HEIGHT);
@@ -32,15 +30,15 @@ public class AbstractArtDrawing {
         GUI gui = new GUI("Abstract Art Drawing", WIDTH, HEIGHT);
         DrawSurface drawSurface = gui.getDrawSurface();
         for (int i = 0; i < NUM_OF_LINES; ++i) {
-            lines[i] = Line.generateRandom(frame, random);
+            lines[i] = Line.random(frame, random);
             lines[i].drawOn(drawSurface);
-            Util.mark(lines[i].middle(), Color.BLUE, drawSurface, CIRCLE_RADIUS);
+            new Ball(lines[i].middle(), CIRCLE_RADIUS, Color.BLUE).drawOn(drawSurface);
         }
         for (int i = 0; i < NUM_OF_LINES - 1; ++i) {
             for (int j = i + 1; j < NUM_OF_LINES; ++j) {
                 Point intersectionPoint = lines[i].intersectionWith(lines[j]);
                 if (intersectionPoint != null) {
-                    Util.mark(intersectionPoint, Color.RED, drawSurface, CIRCLE_RADIUS);
+                    new Ball(intersectionPoint, CIRCLE_RADIUS, Color.RED).drawOn(drawSurface);
                 }
             }
         }
