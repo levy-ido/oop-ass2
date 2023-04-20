@@ -4,7 +4,6 @@ import biuoop.DrawSurface;
 import biuoop.GUI;
 import biuoop.Sleeper;
 
-import java.awt.Color;
 import java.awt.Rectangle;
 
 /**
@@ -14,6 +13,7 @@ public class BouncingBallAnimation {
     private static final int WIDTH = 200;
     private static final int HEIGHT = 200;
     private static final int BALL_RADIUS = 30;
+    private static final long MS = 17L;
 
     /**
      * Draws a bouncing ball animation that starts at the given point and moves with the given velocity.
@@ -24,7 +24,7 @@ public class BouncingBallAnimation {
      */
     private static void drawAnimation(Point start, double dx, double dy) {
         GUI gui = new GUI("Bouncing Ball Animation", WIDTH, HEIGHT);
-        Ball ball = new Ball(start, BALL_RADIUS, Color.BLACK);
+        Ball ball = new Ball(start, BALL_RADIUS, java.awt.Color.BLACK);
         ball.setVelocity(dx, dy);
         ball.setFrame(new Rectangle(0, 0, WIDTH, HEIGHT));
         Sleeper sleeper = new Sleeper();
@@ -33,7 +33,7 @@ public class BouncingBallAnimation {
             ball.drawOn(drawSurface);
             gui.show(drawSurface);
             ball.moveOneStep();
-            sleeper.sleepFor(17);
+            sleeper.sleepFor(MS);
         }
     }
 
@@ -51,6 +51,8 @@ public class BouncingBallAnimation {
             x = BALL_RADIUS;
             y = BALL_RADIUS;
         }
-        BouncingBallAnimation.drawAnimation(new Point(x, y), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+        int dx = Integer.parseInt(args[2]);
+        int dy = Integer.parseInt(args[3]);
+        BouncingBallAnimation.drawAnimation(new Point(x, y), dx, dy);
     }
 }

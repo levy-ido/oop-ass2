@@ -22,15 +22,14 @@ public class Point {
     /**
      * Creates a new Point object with random x and y coordinates.
      *
-     * @param frame  A Rectangle object. The new point will be created in this frame
-     * @param random A Random object used to generate random double values
+     * @param frame A Rectangle object. The new point will be created in this frame
      * @return A new Point object with random x and y coordinates
      */
-    public static Point random(Rectangle frame, Random random) {
-        return new Point(
-                random.nextDouble(frame.x, frame.x + frame.width),
-                random.nextDouble(frame.y, frame.y + frame.height)
-        );
+    public static Point random(Rectangle frame) {
+        Random random = new Random();
+        double x = random.nextDouble(frame.x, frame.x + frame.width);
+        double y = random.nextDouble(frame.y, frame.y + frame.height);
+        return new Point(x, y);
     }
 
     /**
@@ -53,8 +52,7 @@ public class Point {
      * @return true if the two points are equal, false otherwise
      */
     public boolean equals(Point other) {
-        DoubleComparer doubleComparer = new DoubleComparer();
-        return doubleComparer.compare(this.x, other.x) == 0 && doubleComparer.compare(this.y, other.y) == 0;
+        return Double.areEqual(this.x, other.x) && Double.areEqual(this.y, other.y);
     }
 
     /**

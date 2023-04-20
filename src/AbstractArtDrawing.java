@@ -3,9 +3,7 @@
 import biuoop.DrawSurface;
 import biuoop.GUI;
 
-import java.awt.Color;
 import java.awt.Rectangle;
-import java.util.Random;
 
 /**
  * Represents an abstract art drawing.
@@ -25,20 +23,19 @@ public class AbstractArtDrawing {
      */
     public static void main(String[] args) {
         Rectangle frame = new Rectangle(0, 0, WIDTH, HEIGHT);
-        Random random = new Random();
         Line[] lines = new Line[NUM_OF_LINES];
         GUI gui = new GUI("Abstract Art Drawing", WIDTH, HEIGHT);
         DrawSurface drawSurface = gui.getDrawSurface();
         for (int i = 0; i < NUM_OF_LINES; ++i) {
-            lines[i] = Line.random(frame, random);
+            lines[i] = Line.random(frame);
             lines[i].drawOn(drawSurface);
-            new Ball(lines[i].middle(), CIRCLE_RADIUS, Color.BLUE).drawOn(drawSurface);
+            new Ball(lines[i].middle(), CIRCLE_RADIUS, java.awt.Color.BLUE).drawOn(drawSurface);
         }
         for (int i = 0; i < NUM_OF_LINES - 1; ++i) {
             for (int j = i + 1; j < NUM_OF_LINES; ++j) {
                 Point intersectionPoint = lines[i].intersectionWith(lines[j]);
                 if (intersectionPoint != null) {
-                    new Ball(intersectionPoint, CIRCLE_RADIUS, Color.RED).drawOn(drawSurface);
+                    new Ball(intersectionPoint, CIRCLE_RADIUS, java.awt.Color.RED).drawOn(drawSurface);
                 }
             }
         }

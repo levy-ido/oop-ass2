@@ -4,7 +4,6 @@ import biuoop.DrawSurface;
 import biuoop.GUI;
 import biuoop.Sleeper;
 
-import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.Random;
 
@@ -15,43 +14,59 @@ public class MultipleBouncingBallsAnimation {
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
     private static final int CRITICAL_RADIUS = 50;
-    private static final double MIN_SPEED = 1.0;
-    private static final double ANGLE_BOUND = 360.0;
-    private static final int MIN_RADIUS = 4;
+    private static final long MS = 17L;
     private final Ball[] balls;
 
     /**
-     * Constructs a new MultipleBouncingBallsAnimation object with the given radii, frame, frame color and Random
-     * object.
-     * @param radii An integer array of radii for the balls
-     * @param frame A Rectangle object representing the frame in which the balls will bounce
-     * @param frameColor A Color object representing the color of the frame
-     * @param random A Random object
+     * Constructs a new MultipleBouncingBallsAnimation object.
+     *
+     * @param radii      An integer array of radii for the balls
+     * @param frame      A Rectangle object representing the frame in which the balls will bounce
+     * @param frameColor A java.awt.Color object representing the color of the frame
      */
-    public MultipleBouncingBallsAnimation(int[] radii, Rectangle frame, Color frameColor, Random random) {
+    public MultipleBouncingBallsAnimation(int[] radii, Rectangle frame, java.awt.Color frameColor) {
         this.balls = new Ball[radii.length];
-        ColorGenerator colorGenerator = new ColorGenerator(random);
         for (int i = 0; i < this.balls.length; ++i) {
-            Rectangle adjustedFrame = new Rectangle(
-                    frame.x + radii[i],
-                    frame.y + radii[i],
-                    frame.width - 2 * radii[i],
-                    frame.height - 2 * radii[i]
-            );
-            this.balls[i] = new Ball(
-                    Point.random(adjustedFrame, random),
-                    radii[i],
-                    colorGenerator.generate(frameColor)
-            );
+            Rectangle adjustedFrame = createAdjustedFrame(frame, radii[i]);
+            Point center = Point.random(adjustedFrame);
+            java.awt.Color color = Color.generate(frameColor);
+            this.balls[i] = new Ball(center, radii[i], color);
+            Velocity velocity = generateBallVelocity(radii[i]);
+            this.balls[i].setVelocity(velocity);
             this.balls[i].setFrame(frame);
-            double speed;
-            if (radii[i] < CRITICAL_RADIUS) {
-                speed = (double) CRITICAL_RADIUS / (double) radii[i];
-            } else {
-                speed = MIN_SPEED;
-            }
-            this.balls[i].setVelocity(Velocity.fromAngleAndSpeed(random.nextDouble(ANGLE_BOUND), speed));
         }
+    }
+
+    /**
+     * Creates an adjusted frame used to generate a random center for a ball with the given radius.
+     *
+     * @param frame  A Rectangle object representing the balls' frame
+     * @param radius An integer representing the balls' radius
+     * @return A new Rectangle object representing the adjusted frame
+     */
+    private static Rectangle createAdjustedFrame(Rectangle frame, int radius) {
+        int x = frame.x + radius;
+        int y = frame.y + radius;
+        int width = frame.width - 2 * radius;
+        int height = frame.height - 2 * radius;
+        return new Rectangle(x, y, width, height);
+    }
+
+    /**
+     * Generates a velocity for a ball with the given radius.
+     *
+     * @param radius An integer representing the balls' radius
+     * @return The new Velocity object
+     */
+    private static Velocity generateBallVelocity(int radius) {
+        double speed;
+        if (radius < CRITICAL_RADIUS) {
+            speed = (double) CRITICAL_RADIUS / (double) radius;
+        } else {
+            speed = 1.0;
+        }
+        Random random = new Random();
+        return Velocity.fromAngleAndSpeed(random.nextDouble(360.0), speed);
     }
 
     /**
@@ -62,22 +77,17 @@ public class MultipleBouncingBallsAnimation {
      */
     public static void main(String[] args) {
         GUI gui = new GUI("Multiple Bouncing Balls Animation", WIDTH, HEIGHT);
-        int[] radii = new StringArrayParser().parse(args);
-        IntArrayModifier intArrayModifier = new IntArrayModifier();
-        intArrayModifier.raise(radii, MIN_RADIUS);
-        intArrayModifier.cap(radii, Math.min(WIDTH, HEIGHT) / 2 - 1);
-        MultipleBouncingBallsAnimation multipleBouncingBallsAnimation = new MultipleBouncingBallsAnimation(
-                radii,
-                new Rectangle(0, 0, WIDTH, HEIGHT),
-                Color.WHITE,
-                new Random()
-        );
+        int[] radii = IntegerArray.parseInt(args);
+        IntegerArray.raise(radii, 1);
+        IntegerArray.cap(radii, Math.min(WIDTH, HEIGHT) / 2 - 1);
+        Rectangle frame = new Rectangle(0, 0, WIDTH, HEIGHT);
+        MultipleBouncingBallsAnimation anim = new MultipleBouncingBallsAnimation(radii, frame, java.awt.Color.WHITE);
         Sleeper sleeper = new Sleeper();
         while (true) {
             DrawSurface drawSurface = gui.getDrawSurface();
-            multipleBouncingBallsAnimation.drawAnimation(drawSurface);
+            anim.drawAnimation(drawSurface);
             gui.show(drawSurface);
-            sleeper.sleepFor(17);
+            sleeper.sleepFor(MS);
         }
     }
 

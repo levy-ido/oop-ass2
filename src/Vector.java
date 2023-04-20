@@ -2,8 +2,8 @@
  * Representing a 2D vector.
  */
 public class Vector {
-    private double x;
-    private double y;
+    private final double x;
+    private final double y;
 
     /**
      * Constructs a new Vector object with the given x and y components.
@@ -17,46 +17,32 @@ public class Vector {
     }
 
     /**
-     * Constructs a new Vector object representing the vector pointing from point a to point b.
+     * Constructs a new Vector object representing the vector pointing from p to q.
      *
-     * @param a A Point object representing a given point
-     * @param b A Point object representing another given point
+     * @param p A Point object representing a given point
+     * @param q A Point object representing another given point
      */
-    public Vector(Point a, Point b) {
-        this(b.getX() - a.getX(), b.getY() - a.getY());
+    public Vector(Point p, Point q) {
+        this(q.getX() - p.getX(), q.getY() - p.getY());
     }
 
     /**
      * Calculates the cross product of this vector and another given vector.
      *
-     * @param other A Vector object representing a given vector
+     * @param v A Vector object representing a given vector
      * @return A double representing the cross product of this vector and the given vector
      */
-    public double product(Vector other) {
-        return this.x * other.y - other.x * this.y;
+    public double cross(Vector v) {
+        return this.x * v.y - v.x * this.y;
     }
 
     /**
-     * Scales this vector by a given scalar.
+     * Returns true if this vector is linearly dependent on the specified vector.
      *
-     * @param scalar A double representing the scalar used to scale this vector
+     * @param v A Vector object representing the vector to compare with this vector
+     * @return true if this vector is linearly dependent on the specified vector
      */
-    public void scale(double scalar) {
-        this.x = scalar * this.x;
-        this.y = scalar * this.y;
-    }
-
-    /**
-     * @return A double representing this vectors' x-component
-     */
-    public double getX() {
-        return this.x;
-    }
-
-    /**
-     * @return A double representing this vectors' y-component
-     */
-    public double getY() {
-        return this.y;
+    public boolean isLinearlyDependent(Vector v) {
+        return Double.areEqual(this.cross(v), 0.0);
     }
 }

@@ -1,13 +1,13 @@
 import biuoop.DrawSurface;
 
-import java.awt.Color;
 import java.awt.Rectangle;
-import java.util.Random;
 
 /**
  * Represents a line segment between two points.
  */
 public class Line {
+    private static final double COLLINEAR = -1.0;
+    private static final double NO_INTERSECTION = -2.0;
     private final Point start;
     private final Point end;
 
@@ -20,9 +20,10 @@ public class Line {
      * @param end   A Point object representing the end of the new line segment
      */
     public Line(Point start, Point end) {
-        DoubleComparer doubleComparer = new DoubleComparer();
-        int xCmpRes = doubleComparer.compare(start.getX(), end.getX());
-        if (xCmpRes < 0 || xCmpRes == 0 && doubleComparer.compare(start.getY(), end.getY()) <= 0) {
+        boolean isStartLeftOfEnd = start.getX() < end.getX();
+        boolean isVertical = Double.areEqual(start.getX(), end.getX());
+        boolean isStartBelowEnd = start.getY() < end.getY();
+        if (isStartLeftOfEnd || (isVertical && isStartBelowEnd)) {
             this.start = start;
             this.end = end;
         } else {
@@ -47,12 +48,13 @@ public class Line {
     /**
      * Creates a new Line object with random ends.
      *
-     * @param frame  A Rectangle object. The new line segment will be created in this frame
-     * @param random A Random object used in generating random points
+     * @param frame A Rectangle object. The new line segment will be created in this frame
      * @return A new Line object representing a random line segment
      */
-    public static Line random(Rectangle frame, Random random) {
-        return new Line(Point.random(frame, random), Point.random(frame, random));
+    public static Line random(Rectangle frame) {
+        Point start = Point.random(frame);
+        Point end = Point.random(frame);
+        return new Line(start, end);
     }
 
     /**
@@ -68,7 +70,9 @@ public class Line {
      * @return A Point object representing the point in the middle of this line segment
      */
     public Point middle() {
-        return new Point((this.start.getX() + this.end.getX()) / 2, (this.start.getY() + this.end.getY()) / 2);
+        double x = (this.start.getX() + this.end.getX()) / 2;
+        double y = (this.start.getY() + this.end.getY()) / 2;
+        return new Point(x, y);
     }
 
     /**
@@ -86,12 +90,49 @@ public class Line {
     }
 
     /**
-     * @return A double representing this line segments' y-intercept
+     * Computes the value of t1 for the intersection point between this line and
+     * the specified line.
+     * Refer to this video for more details:
+     * <a href="https://www.youtube.com/watch?v=5FkOO1Wwb8w">Line Segment Intersection</a>
+     *
+     * @param other A Line object representing the line to compute the intersection with
+     * @return A double representing the value of t1 for the intersection point, or COLLINEAR if the lines are
+     * collinear, or NO_INTERSECTION if the lines do not intersect
+     */
+    private double computeT1(Line other) {
+        Vector ab = new Vector(this.start, this.end);
+        Vector cd = new Vector(other.start, other.end);
+        if (ab.isLinearlyDependent(cd)) {
+            return COLLINEAR;
+        }
+        Vector ac = new Vector(this.start, other.start);
+        double t1 = ac.cross(cd) / ab.cross(cd);
+        double t2 = -(ab.cross(ac) / ab.cross(cd));
+        if (t1 < 0.0 || t1 > 1.0 || t2 < 0.0 || t2 > 1.0) {
+            return NO_INTERSECTION;
+        }
+        return t1;
+    }
+
+    /**
+     * @return A double representing the slope of this line
+     */
+    public double slope() {
+        return (this.end.getY() - this.start.getY()) / (this.end.getX() - this.start.getX());
+    }
+
+    /**
+     * @return A double representing the y-intercept of this line
      */
     public double intercept() {
-        double x1 = this.start.getX();
-        double y1 = this.start.getY();
-        return y1 - ((this.end.getY() - y1) / (this.end.getX() - x1)) * x1;
+        return this.start.getY() - this.slope() * this.start.getX();
+    }
+
+    /**
+     * @return true if this line is vertical
+     */
+    public boolean isVertical() {
+        return Double.areEqual(this.start.getX(), this.end.getX());
     }
 
     /**
@@ -101,30 +142,24 @@ public class Line {
      * @return true if this line segment intersects with the other line segment, false otherwise
      */
     public boolean isIntersecting(Line other) {
-        Vector ab = new Vector(this.start, this.end);
-        Vector cd = new Vector(other.start, other.end);
-        double abCrossCd = ab.product(cd);
-        DoubleComparer doubleComparer = new DoubleComparer();
-        if (doubleComparer.compare(abCrossCd, 0.0) != 0) {
-            Vector ac = new Vector(this.start, other.start);
-            double t = ac.product(cd) / abCrossCd;
-            double u = -(ab.product(ac) / abCrossCd);
-            return doubleComparer.compare(t, 0.0) >= 0
-                    && doubleComparer.compare(t, 1.0) <= 0
-                    && doubleComparer.compare(u, 0.0) >= 0
-                    && doubleComparer.compare(u, 1.0) <= 0;
-        }
-        double thisStartX = this.start.getX();
-        double thisEndX = this.end.getX();
-        if (doubleComparer.compare(thisStartX, thisEndX) == 0) {
-            return doubleComparer.compare(this.end.getY(), other.start.getY()) >= 0
-                    && doubleComparer.compare(this.start.getY(), other.end.getY()) <= 0;
-        }
-        if (doubleComparer.compare(this.intercept(), other.intercept()) != 0) {
+        double t1 = this.computeT1(other);
+        if (t1 == NO_INTERSECTION) {
             return false;
         }
-        return doubleComparer.compare(thisEndX, other.start.getX()) >= 0
-                && doubleComparer.compare(thisStartX, other.end.getX()) <= 0;
+        if (t1 != COLLINEAR) {
+            return true;
+        }
+        if (this.isVertical() && other.isVertical()) {
+            boolean isThisBelowOther = this.end.getY() < other.start.getY();
+            boolean isThisAboveOther = this.start.getY() > other.end.getY();
+            return !isThisBelowOther && !isThisAboveOther;
+        }
+        if (!Double.areEqual(this.intercept(), other.intercept())) {
+            return false;
+        }
+        boolean isThisLeftOfOther = this.end.getX() < other.start.getX();
+        boolean isThisRightOfOther = this.start.getX() > other.end.getX();
+        return !isThisLeftOfOther && !isThisRightOfOther;
     }
 
     /**
@@ -134,24 +169,14 @@ public class Line {
      * @return A Point object representing the single point of intersection if it exists, otherwise returns null
      */
     public Point intersectionWith(Line other) {
-        Vector ab = new Vector(this.start, this.end);
-        Vector cd = new Vector(other.start, other.end);
-        double abCrossCd = ab.product(cd);
-        DoubleComparer doubleComparer = new DoubleComparer();
-        if (doubleComparer.compare(abCrossCd, 0.0) != 0) {
-            Vector ac = new Vector(this.start, other.start);
-            double t = ac.product(cd) / abCrossCd;
-            double u = -(ab.product(ac) / abCrossCd);
-            if (
-                    doubleComparer.compare(t, 0.0) == -1
-                    || doubleComparer.compare(t, 1.0) == 1
-                    || doubleComparer.compare(u, 0.0) == -1
-                    || doubleComparer.compare(u, 1.0) == 1
-            ) {
-                return null;
-            }
-            ab.scale(t);
-            return new Point(this.start.getX() + ab.getX(), this.start.getY() + ab.getY());
+        double t1 = this.computeT1(other);
+        if (t1 == NO_INTERSECTION) {
+            return null;
+        }
+        if (t1 != COLLINEAR) {
+            double x = this.start.getX() + t1 * (this.end.getX() - this.start.getX());
+            double y = this.start.getY() + t1 * (this.end.getY() - this.start.getY());
+            return new Point(x, y);
         }
         if (this.end.equals(other.start)) {
             return this.end;
@@ -178,12 +203,11 @@ public class Line {
      * @param drawSurface A DrawSurface object
      */
     public void drawOn(DrawSurface drawSurface) {
-        drawSurface.setColor(Color.BLACK);
-        drawSurface.drawLine(
-                (int) this.start.getX(),
-                (int) this.start.getY(),
-                (int) this.end.getX(),
-                (int) this.end.getY()
-        );
+        drawSurface.setColor(java.awt.Color.BLACK);
+        int x1 = (int) this.start.getX();
+        int y1 = (int) this.start.getY();
+        int x2 = (int) this.end.getX();
+        int y2 = (int) this.end.getY();
+        drawSurface.drawLine(x1, y1, x2, y2);
     }
 }

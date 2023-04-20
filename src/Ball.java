@@ -1,6 +1,5 @@
 import biuoop.DrawSurface;
 
-import java.awt.Color;
 import java.awt.Rectangle;
 
 /**
@@ -8,7 +7,7 @@ import java.awt.Rectangle;
  */
 public class Ball {
     private final int radius;
-    private final Color color;
+    private final java.awt.Color color;
     private Point center;
     private Velocity velocity;
     private Rectangle frame;
@@ -18,9 +17,9 @@ public class Ball {
      *
      * @param center A point object representing the center of the ball
      * @param radius An integer representing the radius of the ball
-     * @param color  A Color object representing the color of the ball
+     * @param color  A java.awt.Color object representing the color of the ball
      */
-    public Ball(Point center, int radius, Color color) {
+    public Ball(Point center, int radius, java.awt.Color color) {
         this.center = center;
         this.radius = radius;
         this.color = color;
@@ -32,9 +31,9 @@ public class Ball {
      * @param x      A double representing the x-coordinate of the balls' center
      * @param y      A double representing the y-coordinate of the balls' center
      * @param radius An integer representing the radius of the ball
-     * @param color  A Color object representing the color of the ball
+     * @param color  A java.awt.Color object representing the color of the ball
      */
-    public Ball(double x, double y, int radius, Color color) {
+    public Ball(double x, double y, int radius, java.awt.Color color) {
         this(new Point(x, y), radius, color);
     }
 
@@ -60,9 +59,9 @@ public class Ball {
     }
 
     /**
-     * @return A Color object representing the color of the ball
+     * @return A java.awt.Color object representing the color of the ball
      */
-    public Color getColor() {
+    public java.awt.Color getColor() {
         return this.color;
     }
 
@@ -107,14 +106,16 @@ public class Ball {
      * If the ball hits a boundary, its velocity is reversed in the corresponding direction.
      */
     public void moveOneStep() {
-        int x = this.getX();
         double dx = this.velocity.getDx();
-        if (x - this.frame.x < this.radius || this.frame.x + this.frame.width - x < this.radius) {
+        double leftBoundaryDistance = this.getX() - this.frame.x;
+        double rightBoundaryDistance = this.frame.x + this.frame.width - this.getX();
+        if (leftBoundaryDistance < this.radius || rightBoundaryDistance < this.radius) {
             dx = -dx;
         }
-        int y = this.getY();
         double dy = this.velocity.getDy();
-        if (y - this.frame.y < this.radius || this.frame.y + this.frame.height - y < this.radius) {
+        double topBoundaryDistance = this.getY() - this.frame.y;
+        double bottomBoundaryDistance = this.frame.y + this.frame.height - this.getY();
+        if (topBoundaryDistance < this.radius || bottomBoundaryDistance < this.radius) {
             dy = -dy;
         }
         this.setVelocity(dx, dy);
