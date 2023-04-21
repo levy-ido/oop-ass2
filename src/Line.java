@@ -1,5 +1,6 @@
 import biuoop.DrawSurface;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 
 /**
@@ -13,24 +14,13 @@ public class Line {
 
     /**
      * Constructs a new Line object with a given start and end points.
-     * Makes sure that the starting point is to the left of the ending point.
-     * If the start and end points have the same x-coordinate the starting point will be below the ending point.
      *
      * @param start A Point object representing the start of the new line segment
      * @param end   A Point object representing the end of the new line segment
      */
     public Line(Point start, Point end) {
-        boolean isStartLeftOfEnd = start.getX() < end.getX();
-        boolean isVertical = Double.areEqual(start.getX(), end.getX());
-        boolean isStartBelowEnd = start.getY() < end.getY();
-        if (isStartLeftOfEnd || (isVertical && isStartBelowEnd)) {
-            this.start = start;
-            this.end = end;
-        } else {
-            // Der Anfang Ist Das Ende Und Das Ende Ist Der Anfang
-            this.start = end;
-            this.end = start;
-        }
+        this.start = start;
+        this.end = end;
     }
 
     /**
@@ -136,6 +126,34 @@ public class Line {
     }
 
     /**
+     * @return A double representing this line segments' minimum x-coordinate
+     */
+    public double minX() {
+        return Math.min(this.start.getX(), this.end.getX());
+    }
+
+    /**
+     * @return A double representing this line segments' maximum x-coordinate
+     */
+    public double maxX() {
+        return Math.max(this.start.getX(), this.end.getX());
+    }
+
+    /**
+     * @return A double representing this line segments' minimum y-coordinate
+     */
+    public double minY() {
+        return Math.min(this.start.getY(), this.end.getY());
+    }
+
+    /**
+     * @return A double representing this line segments' maximum y-coordinate
+     */
+    public double maxY() {
+        return Math.max(this.start.getY(), this.end.getY());
+    }
+
+    /**
      * Checks whether this line segment is intersecting with another line segment.
      *
      * @param other A Line object representing the other line segment to check for intersection with
@@ -149,17 +167,49 @@ public class Line {
         if (t1 != COLLINEAR) {
             return true;
         }
-        if (this.isVertical() && other.isVertical()) {
-            boolean isThisBelowOther = this.end.getY() < other.start.getY();
-            boolean isThisAboveOther = this.start.getY() > other.end.getY();
+        if (this.isVertical()) {
+            if (!Double.areEqual(this.start.getX(), other.start.getX())) {
+                return false;
+            }
+            boolean isThisBelowOther = this.maxY() < other.minY();
+            boolean isThisAboveOther = this.minY() > other.maxY();
             return !isThisBelowOther && !isThisAboveOther;
         }
         if (!Double.areEqual(this.intercept(), other.intercept())) {
             return false;
         }
-        boolean isThisLeftOfOther = this.end.getX() < other.start.getX();
-        boolean isThisRightOfOther = this.start.getX() > other.end.getX();
+        boolean isThisLeftOfOther = this.maxX() < other.minX();
+        boolean isThisRightOfOther = this.minX() > other.maxX();
         return !isThisLeftOfOther && !isThisRightOfOther;
+    }
+
+    /**
+     * An auxiliary method of intersectionWith. Returns the single point of intersection between this line segment and
+     * a given line segment assuming these line segments are collinear.
+     *
+     * @param other A Line object representing the other line segment to check for intersection with
+     * @return A Point object representing the two line segments single point of intersection if it exists, otherwise
+     * null
+     */
+    private Point collinearIntersectionWith(Line other) {
+        Vector u = new Vector(this.start, this.end);
+        Vector v = new Vector(other.start, other.end);
+        if (Double.areEqual(u.angle(), v.angle())) {
+            if (this.end.equals(other.start)) {
+                return this.end;
+            }
+            if (this.start.equals(other.end)) {
+                return this.start;
+            }
+        } else {
+            if (this.start.equals(other.start)) {
+                return this.start;
+            }
+            if (this.end.equals(other.end)) {
+                return this.end;
+            }
+        }
+        return null;
     }
 
     /**
@@ -178,13 +228,7 @@ public class Line {
             double y = this.start.getY() + t1 * (this.end.getY() - this.start.getY());
             return new Point(x, y);
         }
-        if (this.end.equals(other.start)) {
-            return this.end;
-        }
-        if (this.start.equals(other.end)) {
-            return this.start;
-        }
-        return null;
+        return this.collinearIntersectionWith(other);
     }
 
     /**
@@ -194,7 +238,10 @@ public class Line {
      * @return true if the line segments are equal, false otherwise
      */
     public boolean equals(Line other) {
-        return this.start.equals(other.start) && this.end.equals(other.end);
+        if (this.start.equals(other.start) && this.end.equals(other.end)) {
+            return true;
+        }
+        return this.start.equals(other.end) && this.end.equals(other.start);
     }
 
     /**
@@ -203,7 +250,7 @@ public class Line {
      * @param drawSurface A DrawSurface object
      */
     public void drawOn(DrawSurface drawSurface) {
-        drawSurface.setColor(java.awt.Color.BLACK);
+        drawSurface.setColor(Color.BLACK);
         int x1 = (int) this.start.getX();
         int y1 = (int) this.start.getY();
         int x2 = (int) this.end.getX();

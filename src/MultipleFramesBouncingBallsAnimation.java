@@ -4,6 +4,7 @@ import biuoop.DrawSurface;
 import biuoop.GUI;
 import biuoop.Sleeper;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 
 /**
@@ -26,7 +27,7 @@ public class MultipleFramesBouncingBallsAnimation {
         int[] grayAnimationRadii = IntegerArray.parseInt(args, 0, args.length / 2);
         IntegerArray.raise(grayAnimationRadii, 1);
         IntegerArray.cap(grayAnimationRadii, Math.min(GRAY_FRAME.width, GRAY_FRAME.height) / 2 - 1);
-        return new MultipleBouncingBallsAnimation(grayAnimationRadii, GRAY_FRAME, java.awt.Color.GRAY);
+        return new MultipleBouncingBallsAnimation(grayAnimationRadii, GRAY_FRAME, Color.GRAY);
     }
 
     /**
@@ -40,7 +41,7 @@ public class MultipleFramesBouncingBallsAnimation {
         int[] yellowAnimationRadii = IntegerArray.parseInt(args, args.length / 2, numOfBalls);
         IntegerArray.raise(yellowAnimationRadii, 1);
         IntegerArray.cap(yellowAnimationRadii, Math.min(YELLOW_FRAME.width, YELLOW_FRAME.height) / 2 - 1);
-        return new MultipleBouncingBallsAnimation(yellowAnimationRadii, YELLOW_FRAME, java.awt.Color.YELLOW);
+        return new MultipleBouncingBallsAnimation(yellowAnimationRadii, YELLOW_FRAME, Color.YELLOW);
     }
 
     /**
@@ -48,9 +49,9 @@ public class MultipleFramesBouncingBallsAnimation {
      *
      * @param drawSurface A DrawSurface object
      * @param frame       A Rectangle object representing the frame to be drawn
-     * @param color       A java.awt.Color object representing the color to use when drawing the frame
+     * @param color       A Color object representing the color to use when drawing the frame
      */
-    private static void drawFrame(DrawSurface drawSurface, Rectangle frame, java.awt.Color color) {
+    private static void drawFrame(DrawSurface drawSurface, Rectangle frame, Color color) {
         drawSurface.setColor(color);
         drawSurface.fillRectangle(frame.x, frame.y, frame.width, frame.height);
     }
@@ -67,9 +68,9 @@ public class MultipleFramesBouncingBallsAnimation {
         Sleeper sleeper = new Sleeper();
         while (true) {
             DrawSurface drawSurface = gui.getDrawSurface();
-            drawFrame(drawSurface, GRAY_FRAME, java.awt.Color.GRAY);
+            drawFrame(drawSurface, GRAY_FRAME, Color.GRAY);
             grayAnimation.drawAnimation(drawSurface);
-            drawFrame(drawSurface, YELLOW_FRAME, java.awt.Color.YELLOW);
+            drawFrame(drawSurface, YELLOW_FRAME, Color.YELLOW);
             yellowAnimation.drawAnimation(drawSurface);
             gui.show(drawSurface);
             sleeper.sleepFor(MS);

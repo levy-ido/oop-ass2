@@ -1,5 +1,6 @@
 import biuoop.DrawSurface;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 
 /**
@@ -7,7 +8,7 @@ import java.awt.Rectangle;
  */
 public class Ball {
     private final int radius;
-    private final java.awt.Color color;
+    private final Color color;
     private Point center;
     private Velocity velocity;
     private Rectangle frame;
@@ -17,9 +18,9 @@ public class Ball {
      *
      * @param center A point object representing the center of the ball
      * @param radius An integer representing the radius of the ball
-     * @param color  A java.awt.Color object representing the color of the ball
+     * @param color  Color object representing the color of the ball
      */
-    public Ball(Point center, int radius, java.awt.Color color) {
+    public Ball(Point center, int radius, Color color) {
         this.center = center;
         this.radius = radius;
         this.color = color;
@@ -31,9 +32,9 @@ public class Ball {
      * @param x      A double representing the x-coordinate of the balls' center
      * @param y      A double representing the y-coordinate of the balls' center
      * @param radius An integer representing the radius of the ball
-     * @param color  A java.awt.Color object representing the color of the ball
+     * @param color  Color object representing the color of the ball
      */
-    public Ball(double x, double y, int radius, java.awt.Color color) {
+    public Ball(double x, double y, int radius, Color color) {
         this(new Point(x, y), radius, color);
     }
 
@@ -59,9 +60,9 @@ public class Ball {
     }
 
     /**
-     * @return A java.awt.Color object representing the color of the ball
+     * @return A Color object representing the color of the ball
      */
-    public java.awt.Color getColor() {
+    public Color getColor() {
         return this.color;
     }
 

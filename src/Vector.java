@@ -45,4 +45,11 @@ public class Vector {
     public boolean isLinearlyDependent(Vector v) {
         return Double.areEqual(this.cross(v), 0.0);
     }
+
+    /**
+     * @return A double representing the angle in radians between the positive x-axis and this vector
+     */
+    public double angle() {
+        return Math.atan2(this.y, this.x);
+    }
 }
