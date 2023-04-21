@@ -14,7 +14,7 @@ public class Double {
      *
      * @param a The first double value to compare
      * @param b The second double value to compare
-     * @return true if the absolute difference between a and b is less than the tolerance value
+     * @return true if the absolute difference between a and b is less than the tolerance value, false otherwise
      */
     public static boolean areEqual(double a, double b) {
         return Math.abs(a - b) < TOLERANCE;

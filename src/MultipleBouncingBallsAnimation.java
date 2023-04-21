@@ -66,7 +66,8 @@ public class MultipleBouncingBallsAnimation {
             speed = 1.0;
         }
         Random random = new Random();
-        return Velocity.fromAngleAndSpeed(random.nextDouble(360.0), speed);
+        double angle = random.nextDouble(360.0);
+        return Velocity.fromAngleAndSpeed(angle, speed);
     }
 
     /**

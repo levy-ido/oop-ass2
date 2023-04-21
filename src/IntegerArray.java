@@ -1,5 +1,5 @@
 /**
- * This class provides methods for modifying integer arrays.
+ * This class provides methods integer arrays.
  */
 public class IntegerArray {
 

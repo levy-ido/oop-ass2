@@ -80,14 +80,14 @@ public class Line {
     }
 
     /**
-     * Computes the value of t1 for the intersection point between this line and
-     * the specified line.
+     * Computes the value of t1 for the intersection point between this line segment and
+     * the specified line segment.
      * Refer to this video for more details:
      * <a href="https://www.youtube.com/watch?v=5FkOO1Wwb8w">Line Segment Intersection</a>
      *
-     * @param other A Line object representing the line to compute the intersection with
-     * @return A double representing the value of t1 for the intersection point, or COLLINEAR if the lines are
-     * collinear, or NO_INTERSECTION if the lines do not intersect
+     * @param other A Line object representing the line segment to compute the intersection with
+     * @return A double representing the value of t1 for the intersection point, or COLLINEAR if the line segments are
+     * collinear, or NO_INTERSECTION if the line segments do not intersect
      */
     private double computeT1(Line other) {
         Vector ab = new Vector(this.start, this.end);
@@ -105,21 +105,21 @@ public class Line {
     }
 
     /**
-     * @return A double representing the slope of this line
+     * @return A double representing the slope of this line segment
      */
     public double slope() {
         return (this.end.getY() - this.start.getY()) / (this.end.getX() - this.start.getX());
     }
 
     /**
-     * @return A double representing the y-intercept of this line
+     * @return A double representing the y-intercept of this line segment
      */
     public double intercept() {
         return this.start.getY() - this.slope() * this.start.getX();
     }
 
     /**
-     * @return true if this line is vertical
+     * @return true if this line segment is vertical, false otherwise
      */
     public boolean isVertical() {
         return Double.areEqual(this.start.getX(), this.end.getX());

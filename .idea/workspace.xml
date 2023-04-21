@@ -4,15 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2fb47e9e-6044-491b-a7a1-cba2abdea480" name="Changes" comment="Improved readability and design.">
+    <list default="true" id="2fb47e9e-6044-491b-a7a1-cba2abdea480" name="Changes" comment="Made sure my code fits assignment standards. Mainly changes to the Line class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/oop_ass2.zip" beforeDir="false" afterPath="$PROJECT_DIR$/oop_ass2.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/oop_ass2/Ball.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/oop_ass2/Ball.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/oop_ass2/BouncingBallAnimation.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/oop_ass2/BouncingBallAnimation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/oop_ass2/ColorGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/oop_ass2/IntArrayModifier.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/oop_ass2/Line.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/oop_ass2/Line.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/oop_ass2/MultipleFramesBouncingBallsAnimation.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/oop_ass2/MultipleFramesBouncingBallsAnimation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/oop_ass2/StringArrayParser.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/oop_ass2/Vector.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/oop_ass2/Vector.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/oop_ass2/Velocity.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/oop_ass2/Velocity.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AbstractArtDrawing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AbstractArtDrawing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Ball.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Ball.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BouncingBallAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BouncingBallAnimation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Double.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Double.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Line.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MultipleFramesBouncingBallsAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MultipleFramesBouncingBallsAnimation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Vector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Velocity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Velocity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +107,7 @@
       <workItem from="1681889497584" duration="35462000" />
       <workItem from="1681976542579" duration="20680000" />
       <workItem from="1682025110083" duration="289000" />
-      <workItem from="1682088938364" duration="7353000" />
+      <workItem from="1682088938364" duration="10941000" />
     </task>
     <task id="LOCAL-00001" summary="Deleted the Util class. Created 3 new classes. Changed isIntersecting and intersectionWith in Line. General tidying of the code. Deleted keepInFrame and generateRandom methods in Ball. Deleted add in Point. Probably I didn't list all the changes I made.">
       <created>1681917270986</created>
@@ -115,7 +123,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682024388572</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Made sure my code fits assignment standards. Mainly changes to the Line class">
+      <created>1682098681470</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1682098681470</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -135,18 +150,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Deleted the Util class. Created 3 new classes. Changed isIntersecting and intersectionWith in Line. General tidying of the code. Deleted keepInFrame and generateRandom methods in Ball. Deleted add in Point. Probably I didn't list all the changes I made." />
     <MESSAGE value="Improved readability and design." />
-    <option name="LAST_COMMIT_MESSAGE" value="Improved readability and design." />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/TestForAss2.java</url>
-          <line>144</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Made sure my code fits assignment standards. Mainly changes to the Line class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Made sure my code fits assignment standards. Mainly changes to the Line class" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -16,8 +16,8 @@ public class AbstractArtDrawing {
     private static final int CIRCLE_RADIUS = 3;
 
     /**
-     * This method generates an abstract art drawing by randomly generating lines and marking their middle points and
-     * intersections.
+     * This method generates an abstract art drawing by randomly generating line segments and marking their middle
+     * points and intersections.
      * The drawing is displayed on a GUI window.
      *
      * @param args A String array. This parameter is not used.

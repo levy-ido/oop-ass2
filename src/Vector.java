@@ -40,7 +40,7 @@ public class Vector {
      * Returns true if this vector is linearly dependent on the specified vector.
      *
      * @param v A Vector object representing the vector to compare with this vector
-     * @return true if this vector is linearly dependent on the specified vector
+     * @return true if this vector is linearly dependent on the specified vector, false otherwise
      */
     public boolean isLinearlyDependent(Vector v) {
         return Double.areEqual(this.cross(v), 0.0);

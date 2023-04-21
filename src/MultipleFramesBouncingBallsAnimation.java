@@ -18,27 +18,27 @@ public class MultipleFramesBouncingBallsAnimation {
     private static final long MS = 17L;
 
     /**
-     * Sets up a gray animation using the given arguments.
+     * Sets up the gray frame.
      *
-     * @param args An array of Strings representing the radii of the balls in the animation
-     * @return A MultipleBouncingBallsAnimation object representing the gray animation
+     * @param args An array of Strings containing the radii of the balls in the gray frame
+     * @return A MultipleBouncingBallsAnimation object representing the gray frame
      */
-    private static MultipleBouncingBallsAnimation setupGrayAnimation(String[] args) {
-        int[] grayAnimationRadii = IntegerArray.parseInt(args, 0, args.length / 2);
-        IntegerArray.raise(grayAnimationRadii, 1);
-        IntegerArray.cap(grayAnimationRadii, Math.min(GRAY_FRAME.width, GRAY_FRAME.height) / 2 - 1);
-        return new MultipleBouncingBallsAnimation(grayAnimationRadii, GRAY_FRAME, Color.GRAY);
+    private static MultipleBouncingBallsAnimation setupGrayFrame(String[] args) {
+        int[] grayFrameRadii = IntegerArray.parseInt(args, 0, args.length / 2);
+        IntegerArray.raise(grayFrameRadii, 1);
+        IntegerArray.cap(grayFrameRadii, Math.min(GRAY_FRAME.width, GRAY_FRAME.height) / 2 - 1);
+        return new MultipleBouncingBallsAnimation(grayFrameRadii, GRAY_FRAME, Color.GRAY);
     }
 
     /**
-     * Sets up a yellow animation using the given arguments.
+     * Sets up the yellow frame.
      *
-     * @param args An array of Strings representing the radii of the balls in the animation
-     * @return A MultipleBouncingBallsAnimation object representing the yellow animation
+     * @param args An array of Strings containing the radii of the balls in the yellow frame
+     * @return A MultipleBouncingBallsAnimation object representing the yellow frame
      */
-    private static MultipleBouncingBallsAnimation setupYellowAnimation(String[] args) {
-        int numOfBalls = args.length - args.length / 2;
-        int[] yellowAnimationRadii = IntegerArray.parseInt(args, args.length / 2, numOfBalls);
+    private static MultipleBouncingBallsAnimation setupYellowFrame(String[] args) {
+        int numOfBallsInYellowFrame = args.length - args.length / 2;
+        int[] yellowAnimationRadii = IntegerArray.parseInt(args, args.length / 2, numOfBallsInYellowFrame);
         IntegerArray.raise(yellowAnimationRadii, 1);
         IntegerArray.cap(yellowAnimationRadii, Math.min(YELLOW_FRAME.width, YELLOW_FRAME.height) / 2 - 1);
         return new MultipleBouncingBallsAnimation(yellowAnimationRadii, YELLOW_FRAME, Color.YELLOW);
@@ -62,16 +62,16 @@ public class MultipleFramesBouncingBallsAnimation {
      * @param args A String array containing integers representing the balls radii
      */
     public static void main(String[] args) {
-        MultipleBouncingBallsAnimation grayAnimation = setupGrayAnimation(args);
-        MultipleBouncingBallsAnimation yellowAnimation = setupYellowAnimation(args);
+        MultipleBouncingBallsAnimation grayFrame = setupGrayFrame(args);
+        MultipleBouncingBallsAnimation yellowFrame = setupYellowFrame(args);
         GUI gui = new GUI("Multiple Frames Bouncing Balls Animation", WIDTH, HEIGHT);
         Sleeper sleeper = new Sleeper();
         while (true) {
             DrawSurface drawSurface = gui.getDrawSurface();
             drawFrame(drawSurface, GRAY_FRAME, Color.GRAY);
-            grayAnimation.drawAnimation(drawSurface);
+            grayFrame.drawAnimation(drawSurface);
             drawFrame(drawSurface, YELLOW_FRAME, Color.YELLOW);
-            yellowAnimation.drawAnimation(drawSurface);
+            yellowFrame.drawAnimation(drawSurface);
             gui.show(drawSurface);
             sleeper.sleepFor(MS);
         }

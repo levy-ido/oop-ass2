@@ -19,7 +19,7 @@ public class Velocity {
     /**
      * Constructs a new Velocity object corresponding to the given angle and speed.
      *
-     * @param angle A double representing an angle in degrees
+     * @param angle A double representing an angle in degrees relative to the positive y-axis in clockwise fashion
      * @param speed A double representing speed
      * @return A new Velocity object corresponding to the given angle and speed
      */
